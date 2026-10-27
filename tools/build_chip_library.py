@@ -61,6 +61,20 @@ def get_mats(item):
     # Name matters in the glTF and for straightforward Unreal re-assignment.
     front=create_mat("PRINT | "+item["id"]+" front",rgb,image=item["id"]+"_front.jpg",metal=.085,rough=.31)
     back=create_mat("PRINT | "+item["id"]+" back",rgb,image=item["id"]+"_back.jpg",metal=.10,rough=.36)
+    # Shared independent microdetail maps give true non-flat foil highlights.
+    for printed in (front,back):
+        p=printed.node_tree.nodes.get("Principled BSDF")
+        n=printed.node_tree.nodes.new("ShaderNodeTexImage")
+        n.image=bpy.data.images.load(os.path.join(TEXTURES,"_shared_foil_normal.png"),check_existing=True)
+        n.image.colorspace_settings.name="Non-Color"
+        normalmap=printed.node_tree.nodes.new("ShaderNodeNormalMap")
+        normalmap.inputs["Strength"].default_value=.32
+        printed.node_tree.links.new(n.outputs["Color"],normalmap.inputs["Color"])
+        printed.node_tree.links.new(normalmap.outputs["Normal"],p.inputs["Normal"])
+        rough=printed.node_tree.nodes.new("ShaderNodeTexImage")
+        rough.image=bpy.data.images.load(os.path.join(TEXTURES,"_shared_foil_rough.png"),check_existing=True)
+        rough.image.colorspace_settings.name="Non-Color"
+        printed.node_tree.links.new(rough.outputs["Color"],p.inputs["Roughness"])
     weld=create_mat("Sealed foil | crimped branded edge",rgb,metal=.22,rough=.35)
     metallic=create_mat("Highlights | aluminium plated edges",(.61,.62,.58),metal=.77,rough=.3)
     cap=create_mat("Canister | smoked coloured polymer top",(.075,.078,.075),metal=.18,rough=.31)
