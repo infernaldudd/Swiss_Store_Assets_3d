@@ -46,21 +46,20 @@ def centered(d,text,y,width,maxsize,color,kind="heavy",stroke=0,stroke_color=Non
     d.text((x,y-bb[1]),text,font=f,fill=color,
            stroke_width=stroke,stroke_fill=stroke_color)
 def colorbg(accent,seed,style):
-    base=hx(accent)
-    rng=random.Random(seed)
-    im=Image.new("RGB",(W,H))
-    pix=im.load()
-    tint=(230,226,207) if style in ("gourmet","legume") else base
-    for y in range(H):
-        yy=y/H
-        for x in range(W):
-            edge=abs(x-W/2)/(W/2)
-            t=.10+.29*yy+.15*edge
-            c=mix(tint,(35,28,21),t)
-            streak=5*math.sin(y*.029+x*.009)+3*math.sin(x*.064+y*.032)
-            g=rng.gauss(0,1.6)
-            pix[x,y]=tuple(max(0,min(255,int(v+streak+g))) for v in c)
-    return im
+    # Vectorized image generation: 120m-plus pixel operations run in NumPy rather
+    # than the Python per-pixel loop (orders of magnitude faster in CI).
+    import numpy as np
+    base=np.asarray(hx(accent),dtype=np.float32)
+    tint=np.asarray((230,226,207),dtype=np.float32) if style in ("gourmet","legume") else base
+    yy,xx=np.mgrid[:H,:W].astype(np.float32)
+    edge=np.abs(xx-W/2)/(W/2)
+    t=.10+.29*(yy/H)+.15*edge
+    streak=5*np.sin(yy*.029+xx*.009)+3*np.sin(xx*.064+yy*.032)
+    noise=np.random.default_rng(seed).normal(0,1.6,(H,W))
+    a=(tint[None,None,:]*(1-t[:,:,None])+
+       np.array((35,28,21),dtype=np.float32)[None,None,:]*t[:,:,None] +
+       (streak+noise)[:,:,None])
+    return Image.fromarray(np.uint8(np.clip(a,0,255)),"RGB")
 def chip_picture(img,seed,shape):
     # Original painterly chip illustrations, not retail package photos.
     rr=random.Random(seed)
