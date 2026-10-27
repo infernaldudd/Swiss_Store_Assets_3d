@@ -29,7 +29,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A assets/ previews/
+          git add -A assets/
+          if find previews/ -name '*.png' -print -quit | grep -q .; then git add -A previews/; fi
           if ! git diff --cached --quiet; then
             git commit -m "Build four game-ready 3D Swiss storefront signs"
             git push
