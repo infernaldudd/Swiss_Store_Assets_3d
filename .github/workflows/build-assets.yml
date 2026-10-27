@@ -1,0 +1,36 @@
+name: Export four illuminated shop sign GLBs
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/build_store_signs.py"
+      - ".github/workflows/build-assets.yml"
+permissions:
+  contents: write
+jobs:
+  build-store-signs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install Blender and typography
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender fonts-lato
+      - name: Build four GLB assets and previews
+        run: |
+          blender -b -t 2 --python tools/build_store_signs.py
+          test "$(find assets -maxdepth 1 -type f -name '*.glb' | wc -l)" -eq 4
+          ls -lh assets/
+      - name: Commit the generated game assets to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/ previews/
+          if ! git diff --cached --quiet; then
+            git commit -m "Build four game-ready 3D Swiss storefront signs"
+            git push
+          fi
