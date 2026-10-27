@@ -20,9 +20,6 @@ os.makedirs(PREV, exist_ok=True)
 def reset():
     bpy.ops.object.select_all(action='SELECT')
     bpy.ops.object.delete(use_global=False)
-    for mat in list(bpy.data.materials):
-        if mat.users == 0:
-            bpy.data.materials.remove(mat)
 
 def mat(name, color, metallic=0.0, roughness=0.42, emit=0.0):
     m = bpy.data.materials.new(name)
@@ -32,8 +29,10 @@ def mat(name, color, metallic=0.0, roughness=0.42, emit=0.0):
     p.inputs['Base Color'].default_value = (*color, 1)
     p.inputs['Metallic'].default_value = metallic
     p.inputs['Roughness'].default_value = roughness
-    p.inputs['Emission Color'].default_value = (*color, 1)
-    p.inputs['Emission Strength'].default_value = emit
+    emission_input = 'Emission Color' if 'Emission Color' in p.inputs else 'Emission'
+    p.inputs[emission_input].default_value = (*color, 1)
+    if 'Emission Strength' in p.inputs:
+        p.inputs['Emission Strength'].default_value = emit
     return m
 
 def load_font(paths):
@@ -140,7 +139,6 @@ def cube(name, center, size, material, bevel=0.0, export=True):
         mod = obj.modifiers.new('radiused fabricated edges', 'BEVEL')
         mod.width = bevel
         mod.segments = 3
-        mod.affect = 'EDGES' if hasattr(mod, 'affect') else None
         mod2 = obj.modifiers.new('weighted normals', 'WEIGHTED_NORMAL')
     if export:
         mark_asset(obj)
