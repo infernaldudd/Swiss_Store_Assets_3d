@@ -2,7 +2,7 @@
 
 Four fictionalized, game-ready illuminated Swiss storefront signs based on supplied storefront photographs: **LOOP**, **LOOP restaurant**, **AMIGOS**, and the **AMIGOS double-A projecting sign**.
 
-The assets are intended for use in Unreal Engine 5.7 and other glTF-capable engines. All dimensions use **metres**. Generated `.glb` assets will be available under `assets/`, with corresponding preview images under `previews/`. The signs have genuine 3D letters, visible depth, varied PBR materials, emissive faces, metal supports, and separate meshes for practical editing.
+The assets are intended for use in Unreal Engine 5.7 and other glTF-capable engines. All dimensions use **metres**. The four exported `.glb` assets are in `assets/`. Optional preview rendering is available through the Blender source script (`RENDER_PREVIEWS=1`); it is disabled in headless CI. The signs have genuine 3D letters, visible depth, varied PBR materials, emissive faces, metal supports, and separate meshes for practical editing.
 
 ## Import
 
