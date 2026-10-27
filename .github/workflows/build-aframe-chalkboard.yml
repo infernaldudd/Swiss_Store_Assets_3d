@@ -1,0 +1,49 @@
+name: Build realistic Swiss A-frame chalkboard
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/generate_chalkboard_textures.py"
+      - "tools/build_aframe_chalkboard.py"
+      - ".github/workflows/build-aframe-chalkboard.yml"
+permissions:
+  contents: write
+concurrency:
+  group: swiss-aframe-chalkboard-model
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Blender and original chalk texture tooling
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-lato libegl1 libgl1-mesa-dri
+      - name: Generate original PBR textures
+        run: |
+          /usr/bin/python3 tools/generate_chalkboard_textures.py
+          test -s textures/aframe/Chalk_LUNCH.png
+          test -s textures/aframe/Chalk_OPEN.png
+          test -s textures/aframe/Weathered_Oak_Albedo.png
+      - name: Export Blender sign and validate embedded texture images
+        run: |
+          blender -b -t 2 --python tools/build_aframe_chalkboard.py
+          test -s assets/Swiss_AFrame_Cafe_Chalkboard.glb
+          ls -lh assets/Swiss_AFrame_Cafe_Chalkboard.glb textures/aframe/*
+      - name: Render front and reverse inspection images (CPU)
+        run: |
+          RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_aframe_chalkboard.py
+          test -s previews/Swiss_AFrame_Cafe_Chalkboard_Front_LUNCH.png
+          test -s previews/Swiss_AFrame_Cafe_Chalkboard_Back_OPEN.png
+      - name: Commit only A-frame model, generated original textures, and previews
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/Swiss_AFrame_Cafe_Chalkboard.glb textures/aframe/ previews/Swiss_AFrame_Cafe_Chalkboard_Front_LUNCH.png previews/Swiss_AFrame_Cafe_Chalkboard_Back_OPEN.png
+          if ! git diff --cached --quiet; then
+            git commit -m "Add game-ready Swiss A-frame cafe chalkboard and textures"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
