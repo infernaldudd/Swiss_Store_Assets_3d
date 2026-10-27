@@ -305,7 +305,8 @@ def main():
         reset()
         width,height=builder()
         export_asset(name)
-        preview(name,width,height)
+        if os.environ.get('RENDER_PREVIEWS') == '1':
+            preview(name,width,height)
     print('COMPLETE: 4 GLBs in',OUT)
 
 if __name__=='__main__':
