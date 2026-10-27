@@ -1,0 +1,49 @@
+name: Build Schwefel Paprika 90g 3D chips bag
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/generate_schwefel_textures.py"
+      - "tools/build_schwefel_bag.py"
+      - ".github/workflows/build-schwefel-paprika.yml"
+permissions:
+  contents: write
+concurrency:
+  group: schwefel-paprika-model-build
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Blender and texture dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-lato libegl1 libgl1-mesa-dri
+      - name: Generate original printed packaging and PBR textures
+        run: |
+          /usr/bin/python3 tools/generate_schwefel_textures.py
+          test "$(find textures/schwefel_paprika -maxdepth 1 -name '*.png' | wc -l)" -eq 4
+          ls -lh textures/schwefel_paprika
+      - name: Build Blender source and embedded-texture GLB
+        run: |
+          blender -b -t 2 --python tools/build_schwefel_bag.py
+          test -s assets/Schwefel_Paprika_90g.glb
+          test -s source/Schwefel_Paprika_90g.blend
+      - name: Render front and back game-asset previews with Cycles CPU
+        run: |
+          RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_schwefel_bag.py
+          test -s previews/Schwefel_Paprika_90g_Front.png
+          test -s previews/Schwefel_Paprika_90g_Back.png
+      - name: Commit only the new chips bag and its source files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/Schwefel_Paprika_90g.glb source/Schwefel_Paprika_90g.blend textures/schwefel_paprika/ previews/Schwefel_Paprika_90g_Front.png previews/Schwefel_Paprika_90g_Back.png
+          if ! git diff --cached --quiet; then
+            git commit -m "Add Schwefel Paprika original 3D chips packaging"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
