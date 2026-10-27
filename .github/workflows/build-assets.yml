@@ -19,7 +19,7 @@ jobs:
       - name: Install Blender and typography
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y blender fonts-lato
+          sudo apt-get install -y blender fonts-lato python3-numpy
       - name: Build four GLB assets and previews
         run: |
           blender -b -t 2 --python tools/build_store_signs.py
