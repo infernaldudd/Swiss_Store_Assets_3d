@@ -238,6 +238,11 @@ def add_preview(name, width, height):
     scene.render.engine='CYCLES'
     scene.cycles.device='CPU'
     scene.cycles.samples=20
+    # Ubuntu's packaged Blender omits OpenImageDenoise; render without denoising.
+    if hasattr(scene.cycles, 'use_denoising'):
+        scene.cycles.use_denoising=False
+    if hasattr(bpy.context.view_layer.cycles, 'use_denoising'):
+        bpy.context.view_layer.cycles.use_denoising=False
     scene.render.resolution_x=1024
     scene.render.resolution_y=700 if height>1.9 else 580
     scene.render.resolution_percentage=100
