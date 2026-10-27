@@ -93,7 +93,7 @@ def cylinder(name, xyz, radius, depth, material,axis="Z",vertices=16,group="hard
 def face(name,side,material,tf):
     # UV-exact thin face with correct left-to-right reading on both sides.
     width,height=.548,.849
-    ymin=(-1 if side<0 else 1)*.028
+    ymin=(-1 if side<0 else 1)*.021
     z=.022
     verts=[
         (-width/2,ymin,z-height/2),
@@ -230,9 +230,10 @@ def export():
         data=json.loads(f.read(size))
     assert magic==b"glTF" and version==2 and length==os.path.getsize(path)
     mats=data.get("materials",[])
-    names=[m["name"] for m in mats]
+    names=[m["name"].lower() for m in mats]
     assert len(data.get("meshes",[]))>=8,("Insufficient geometrical parts",len(data.get("meshes",[])))
-    assert all(any(x in n for n in names) for x in ["chalk","oak","Hardware","Feet"])
+    required=("chalk","oak","hardware","feet")
+    assert all(any(x in n for n in names) for x in required), (required,names)
     assert len(data.get("images",[]))>=3, ("not all original textures embedded",data.get("images"))
     assert os.path.getsize(path)>=300_000
     print("VALIDATED",os.path.basename(path),"meshes",len(data["meshes"]),
