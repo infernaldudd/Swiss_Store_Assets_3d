@@ -85,7 +85,7 @@ def mesh_text(body, name, width, center_z, font, side_material,
     data.font = font
     data.size = 1.0
     data.align_x = 'LEFT'
-    data.align_y = 'BASELINE'
+    data.align_y = 'BOTTOM_BASELINE'
     data.resolution_u = 16
     data.fill_mode = 'BOTH'
     data.extrude = thickness * 0.5
