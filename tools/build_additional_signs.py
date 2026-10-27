@@ -12,7 +12,7 @@ import math
 import os
 import struct
 import sys
-from mathutils import Vector
+from mathutils import Vector, Matrix
 sys.path.insert(0, os.path.dirname(__file__))
 import build_store_signs as base
 
@@ -113,7 +113,7 @@ def poly(name, points, y, depth, material):
     base.mark_asset(obj)
     return obj
 
-def strip(name, start, end, thickness, material, y=-.147, depth=.012):
+def strip(name, start, end, thickness, material, y=-.104, depth=.012):
     """Rectangular extruded vector stroke between two planar points."""
     dx=end[0]-start[0]
     dz=end[1]-start[1]
@@ -127,7 +127,7 @@ def strip(name, start, end, thickness, material, y=-.147, depth=.012):
         (end[0]+nx,end[1]+nz),
     ],y,depth,material)
 
-def circle(name, x,z,r,material, y=-.149):
+def circle(name, x,z,r,material, y=-.104):
     points = [(x+math.cos(2*math.pi*i/20)*r,
                z+math.sin(2*math.pi*i/20)*r)
               for i in range(20)]
@@ -142,7 +142,7 @@ def exit_pictogram():
     # Angled body is constructed with connected trapezoidal white shapes.
     poly("EXIT | running person torso",[
         (-.489,.054),(-.427,.073),(-.363,-.013),(-.414,-.045),
-    ],-.148,.014,WHITE_ICON)
+    ],-.104,.014,WHITE_ICON)
     strip("EXIT | reaching forward arm",(-.434,.027),(-.329,.040),.029,WHITE_ICON)
     strip("EXIT | rear arm",(-.469,.022),(-.567,-.033),.025,WHITE_ICON)
     strip("EXIT | forward shin",(-.393,-.027),(-.303,-.126),.035,WHITE_ICON)
@@ -151,7 +151,7 @@ def exit_pictogram():
     poly("EXIT | directional right arrow", [
         (-.192,-.114),(-.074,-.114),(-.074,-.152),(.031,-.078),
         (-.074,-.004),(-.074,-.043),(-.192,-.043)
-    ],-.149,.016,WHITE_ICON)
+    ],-.105,.016,WHITE_ICON)
 
 def build_exit():
     # Suspended/ceiling-mounted dual-faced aluminium emergency wayfinding light.
@@ -177,14 +177,26 @@ def build_exit():
         for x in (-.752,.752):
             cube("EXIT | short edge bezel %s %.2f"%(sign,x), (x,y,0),
                  (.019,.019,.421), DARK_FRAME, .004)
+    art_before = {obj.name for obj in bpy.context.scene.objects}
     exit_pictogram()
     # Information occupies the open right half of the sign.
     base.mesh_text("AUSGANG", "EXIT | bright white German title", .615, .086,
                    base.FONT_SECONDARY, GREEN_EDGE, [WHITE_ICON],
-                   thickness=.014, center_x=.308, forward_y=-.147)
+                   thickness=.014, center_x=.308, forward_y=-.103)
     base.mesh_text("EXIT", "EXIT | secondary English title", .294, -.095,
                    base.FONT_SECONDARY, GREEN_EDGE, [WHITE_ICON],
-                   thickness=.013, center_x=.390, forward_y=-.146)
+                   thickness=.013, center_x=.390, forward_y=-.103)
+    # Make the reverse illuminated face legible too, not a blank green rectangle.
+    # Rotate geometry in world space to face the other direction.
+    for obj in list(bpy.context.scene.objects):
+        if obj.name in art_before or not obj.get("asset"):
+            continue
+        reverse = obj.copy()
+        reverse.data = obj.data.copy()
+        bpy.context.collection.objects.link(reverse)
+        reverse.name = obj.name + " | reverse face"
+        reverse.matrix_world = Matrix.Rotation(math.pi,4,'Z') @ obj.matrix_world
+        base.mark_asset(reverse)
     # Two machined stainless support rods and slim ceiling plates.
     for idx,x in enumerate((-.51,.51),1):
         base.cylinder("EXIT | ceiling drop rod %d"%idx,
