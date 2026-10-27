@@ -1,0 +1,58 @@
+name: Build 88 Swiss chips library 3D models
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "catalog/chip_collection.json"
+      - "tools/generate_chip_library_textures.py"
+      - "tools/build_chip_library.py"
+      - "tools/make_chip_library_contact_sheets.py"
+      - "tools/render_chip_library_overview.py"
+      - ".github/workflows/build-chip-collection.yml"
+
+permissions:
+  contents: write
+concurrency:
+  group: chip-library-model-build
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install Blender, fonts and illustration dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-lato libegl1 libgl1-mesa-dri
+      - name: Generate 88 unique printed foil texture sets
+        run: |
+          /usr/bin/python3 tools/generate_chip_library_textures.py
+          test "$(find textures/chips -maxdepth 1 -name '*_front.jpg' | wc -l)" -eq 88
+          test "$(find textures/chips -maxdepth 1 -name '*_back.jpg' | wc -l)" -eq 88
+      - name: Export and validate 88 geometry models and material textures
+        run: |
+          blender -b -t 2 --python tools/build_chip_library.py
+          test "$(find assets/chips -maxdepth 1 -name '*.glb' | wc -l)" -eq 88
+          du -sh assets/chips/
+      - name: Produce 8 complete variant contact sheets
+        run: |
+          /usr/bin/python3 tools/make_chip_library_contact_sheets.py
+          test "$(find previews/chips -maxdepth 1 -name '*_variants.jpg' | wc -l)" -eq 8
+      - name: Render 3D supermarket shelf showcase
+        run: |
+          blender -b -t 2 --python tools/render_chip_library_overview.py
+          test -s previews/chips/Preview_9_models_3D.png
+      - name: Push 88 distinct game-ready assets and source textures
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/chips/ textures/chips/ previews/chips/
+          if ! git diff --cached --quiet; then
+            git commit -m "Add 88 chips flavors as independent textured 3D game models"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
