@@ -1,0 +1,84 @@
+name: Build exactly two photorealistic supermarket refrigerators
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/build_refrigeration.py"
+      - "tools/generate_fridge_graphics.py"
+      - ".github/workflows/build-refrigeration.yml"
+permissions:
+  contents: write
+concurrency:
+  group: two-reference-refrigerators
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Blender render and image dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-lato libegl1 libgl1-mesa-dri
+      - name: Generate original 2K fridge print artwork
+        run: |
+          /usr/bin/python3 tools/generate_surface_finish_maps.py
+          /usr/bin/python3 tools/generate_fridge_graphics.py
+          test "$(find textures/refrigeration/ -name '*.png' | wc -l)" -eq 3
+      - name: Export and validate two independent 3D GLB refrigerators
+        run: |
+          blender -b -t 2 --python tools/build_refrigeration.py
+          test -s assets/refrigeration/Swiss_Refrigerated_Glass_Pizza_Deli_Counter.glb
+          test -s assets/refrigeration/Swiss_Glass_Door_Freezer_Chiller_Wall_8Doors.glb
+          test "$(find assets/refrigeration -name '*.glb' | wc -l)" -eq 2
+          test "$(find source/refrigeration -name '*.blend' | wc -l)" -eq 2
+      - name: Render both photo-inspired fridge fixtures
+        run: |
+          RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_refrigeration.py
+          test "$(find previews/refrigeration -name '*.png' | wc -l)" -eq 2
+          rm -f source/refrigeration/*.blend1
+      - name: Produce compact visual QA contact sheet
+        run: |
+          /usr/bin/python3 - <<'PY'
+          from PIL import Image,ImageDraw,ImageFont
+          import os
+          d="previews/refrigeration"
+          pairs=[
+            ("Swiss_Refrigerated_Glass_Pizza_Deli_Counter","01 | Curved-glass deli fridge"),
+            ("Swiss_Glass_Door_Freezer_Chiller_Wall_8Doors","02 | Eight-door refrigerated wall")]
+          result=Image.new("RGB",(1290,675),(225,227,227))
+          brush=ImageDraw.Draw(result)
+          try:
+            ft=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",28)
+          except OSError:ft=ImageFont.load_default()
+          brush.text((26,12),"SWISS STORE REFRIGERATION | 2 ORIGINAL 3D FIXTURES",font=ft,fill=(21,32,37))
+          for i,(name,title) in enumerate(pairs):
+            im=Image.open(os.path.join(d,name+".png")).convert("RGB")
+            im.thumbnail((600,550),Image.Resampling.LANCZOS)
+            x=i*632+18+(600-im.width)//2
+            result.paste(im,(x,65))
+            brush.text((24+i*630,621),title,font=ft,fill=(30,39,44))
+          out=os.path.join(d,"Refrigeration_2_Models_QA.jpg")
+          result.save(out,quality=82,optimize=True)
+          print(out,os.path.getsize(out))
+          assert os.path.getsize(out)<1100000
+          PY
+      - name: Commit exactly two fridge GLBs with source, texture and previews
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/refrigeration/ source/refrigeration/ previews/refrigeration/ textures/refrigeration/
+          if ! git diff --cached --quiet; then
+            git commit -m "Add two high-detail fridges: wheeled pizza display case and eight-door chiller wall"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then
+                echo "Uploaded two photo-inspired refrigeration fixtures"
+                exit 0
+              fi
+              sleep 3
+            done
+            exit 1
+          fi
