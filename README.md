@@ -159,3 +159,7 @@ blender -b -t 2 --python tools/build_dairy_100.py
 \`\`\`
 
 The shopping-category inspiration came from Coop and Migros dairy sections; not every fictional SKU corresponds to an actual retailer listing. Third-party logos and packaging are not used. This is a first production-ready environmental-prop pass, not an independently visually inspected scan-quality guarantee.
+
+### Dairy export correction (2026-10-28)
+
+**Canonical delivery is 100 individual GLBs, not five grouped GLBs.** Each of the five `assets/dairy_100/Batch_XX_.../` folders contains **20 different product GLBs**, with its own product name and geometry/texture. One item per import. The five old grouped `Batch_XX_..._20_Distinct_Products.glb` files at the root of `assets/dairy_100/` are legacy and should be ignored; they are not the requested format. The `tools/build_dairy_100.py` generator now produces the separate exports.
