@@ -60,9 +60,12 @@ def illustration(draw,p,rng):
   rad=rng.randint(10,40)
   if "pasta" in form:
    # Penne/short pasta printed decorative ink; wheat colour and dark grooves.
-   draw.rounded_rectangle((xx-rad,yy-rad/4,xx+rad,yy+rad/4),radius=2,
-                           fill=mix(c,(249,223,147),.43),outline=mix(c,(72,54,34),.34),width=2)
-   draw.line((xx-rad*.58,yy,xx+rad*.58,yy),fill=mix(c,(91,61,29),.28),width=2)
+   # Narrow pasta strokes are lines, not short-radius rectangles.
+   # Pillow's rounded_rectangle rejects very short fractional heights.
+   draw.line((round(xx-rad),round(yy),round(xx+rad),round(yy)),
+             fill=mix(c,(249,223,147),.43),width=max(3,rad//2))
+   draw.line((round(xx-rad*.58),round(yy),round(xx+rad*.58),round(yy)),
+             fill=mix(c,(91,61,29),.28),width=2)
   elif "coffee" in form or "cappuccino" in p["name"].lower():
    draw.ellipse((xx-rad*.65,yy-rad*.45,xx+rad*.65,yy+rad*.45),
                 fill=(102,62,39),outline=(178,128,77),width=3)
