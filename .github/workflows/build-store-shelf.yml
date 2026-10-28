@@ -1,0 +1,52 @@
+name: Build photoreal modular grocery shelving
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/build_store_shelf.py"
+      - "tools/generate_store_shelf_textures.py"
+      - "tools/generate_surface_finish_maps.py"
+      - ".github/workflows/build-store-shelf.yml"
+permissions:
+  contents: write
+concurrency:
+  group: swiss-shelf-geometry-pbr
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+      - name: Install Blender and Pillow PBR dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-lato libegl1 libgl1-mesa-dri
+      - name: Generate physical-material roughness/normal maps and original Swiss CHF tickets
+        run: |
+          /usr/bin/python3 tools/generate_surface_finish_maps.py
+          /usr/bin/python3 tools/generate_store_shelf_textures.py
+          test "$(find textures/surface_finishes -name '*.png' | wc -l)" -eq 9
+          test -s textures/shelving/Shelf_Price_Tickets_2K.png
+      - name: Export and validate 1m and 2m metal shelving plus packed editable source
+        run: |
+          blender -b -t 2 --python tools/build_store_shelf.py
+          test -s assets/shelving/Swiss_Supermarket_Wall_Shelf_1m_5Tier.glb
+          test -s assets/shelving/Swiss_Supermarket_Wall_Shelf_2m_TwoBay.glb
+          test -s source/shelving/Swiss_Supermarket_Wall_Shelf_1m_5Tier.blend
+      - name: Render realistic studio previews for both shelf lengths
+        run: |
+          RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_store_shelf.py
+          test -s previews/shelving/Swiss_Supermarket_Wall_Shelf_1m_5Tier.png
+          test -s previews/shelving/Swiss_Supermarket_Wall_Shelf_2m_TwoBay.png
+      - name: Commit game-ready shelving and textures to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/shelving/ previews/shelving/ source/shelving/ textures/shelving/ textures/surface_finishes/
+          if ! git diff --cached --quiet; then
+            git commit -m "Add modular realistic powder-coat supermarket shelves with PBR and CHF rails"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
