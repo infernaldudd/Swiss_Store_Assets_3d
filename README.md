@@ -202,3 +202,22 @@ RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_store_shelf.py
 \`\`\`
 
 The 2K shelf price labels are fictional decorations, **not real retail prices**. Visual renders are QA references, not guarantees of AAA film-level photorealism. 
+
+
+## Two full-size supermarket refrigerators (from four reference photos)
+
+There are **exactly two independent game-ready GLBs**, not four. Photo 1 corresponds to the first fixture, photos 2–4 to the second:
+
+| GLB | Reference type | Dimensions and construction |
+| --- | --- | --- |
+| `assets/refrigeration/Swiss_Refrigerated_Glass_Pizza_Deli_Counter.glb` | Wheeled pizza / chilled deli display counter | Approx. **2.28m wide × 1.11m deep × 1.35m high**. Curved/angled real transparent glazing with side-cheek glass, polished aluminium rails, food-safe stainless presentation trays, ventilated refrigeration motor plinth with **physically punched grille openings**, removable trays, lighting, caster wheels/axles and rear service glass panels. |
+| `assets/refrigeration/Swiss_Glass_Door_Freezer_Chiller_Wall_8Doors.glb` | Eight-door upright supermarket refrigerated/freezer wall | Approx. **6.92m wide × 0.84m deep × 2.48m high**. Eight separately named and pivot-grouped hinged doors with transparent insulated glass, EPDM rubber gaskets, extruded anodised metal frames, twelve to sixteen internal LED channels, actual shelf trays (6 per bay / 48 total), perforated compressor toe grille, lined insulation, thermostat-style lighting and originally designed generic top marquee. |
+
+Each model is complete and includes refrigeration hardware instead of a photo or rectangle. **Product shelves are empty by design**, so the packaged food and drink GLBs in this repository can be placed separately in Unreal Engine 5.7. The wall's eight `DOOR_01_HINGE` through `DOOR_08_HINGE` groups are meant for independently hinged door animation. Blender's original coordinate system is +Z up; fronts face -Y; dimensions in metres.
+
+- `source/refrigeration/`: editable, packed Blender originals for both finished fixtures.
+- `previews/refrigeration/`: separate studio renders and a two-fixture review contact sheet.
+- `textures/refrigeration/`: three original 2K graphical maps (chiller sign, thermostat, counter service panel); no copied Coop/Migros store graphics.
+- `tools/build_refrigeration.py` and `tools/generate_fridge_graphics.py`: complete reproducible authoring scripts. Rebuild with `/usr/bin/python3 tools/generate_fridge_graphics.py` and `blender -b -t 2 --python tools/build_refrigeration.py`.
+
+The material palette contains real glTF PBR metallic/roughness parameters, subtle steel micro-normals, glass transparency, illuminated internal LEDs, rubber and powder-coated metal. **Glass materials may need an Unreal-specific translucent material instance** after import depending on glTF importer/version; the source materials are individually named for replacement. Side/door glass is static but can be animated by rotating relevant door pivot nodes. These are original photograph-inspired game props, not proprietary equipment designs, and the supplied product photos are not embedded.
