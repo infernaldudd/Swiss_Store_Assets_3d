@@ -221,3 +221,22 @@ Each model is complete and includes refrigeration hardware instead of a photo or
 - `tools/build_refrigeration.py` and `tools/generate_fridge_graphics.py`: complete reproducible authoring scripts. Rebuild with `/usr/bin/python3 tools/generate_fridge_graphics.py` and `blender -b -t 2 --python tools/build_refrigeration.py`.
 
 The material palette contains real glTF PBR metallic/roughness parameters, subtle steel micro-normals, glass transparency, illuminated internal LEDs, rubber and powder-coated metal. **Glass materials may need an Unreal-specific translucent material instance** after import depending on glTF importer/version; the source materials are individually named for replacement. Side/door glass is static but can be animated by rotating relevant door pivot nodes. These are original photograph-inspired game props, not proprietary equipment designs, and the supplied product photos are not embedded.
+
+## Stocked supermarket scenes — four additional game-ready props
+
+These are **four new populated variants**, distinct from and preserving the four empty originals. Their stock uses the real existing in-repo grocery GLBs (actual geometry, original UV labels and PBR materials), not flat product screenshots or fake cardboard placeholders. Each source SKU is imported, its geometry is normalized to a measured physical package size, then linked copies share the same mesh datablock to keep the game scene practical. A `Stocking_Report.json` lists actual instance counts and SKU provenance; structural checks reject product footprints crossing outer fixture bounds.
+
+| Scene | Delivery | Stock design |
+| --- | --- | --- |
+| 1m wall store shelf | `assets/stocked_fixtures/Swiss_Supermarket_Shelf_1m_Stocked.glb` | 5 tiers of actual original snacks, canned food, instant noodles and drink GLBs, with front and back stock rows |
+| 2m double-bay store shelf | `assets/stocked_fixtures/Swiss_Supermarket_Shelf_2m_Stocked.glb` | 10 shelf levels across two bays, more stock and assorted flavour packaging |
+| Eight-door refrigerated glass wall | `assets/stocked_fixtures/Swiss_Glass_Door_Chiller_8Doors_Stocked.glb` | 48 stocked trays, with distinct dairy, yoghurt, cheese, quark, soft drinks, bottled water, and juices; eight original door hinge groups kept |
+| Sloped-glass chilled deli counter | `assets/stocked_fixtures/Swiss_Glass_Deli_Pizza_Counter_Stocked.glb` | Three steel trays with twelve physically sculpted pizzas, including original raised crust, tomato sauce, melted cheese, vegetables and olives (three variants) |
+
+- `previews/stocked_fixtures/`: four isolated Cycles renders, compact overall QA contact sheet and machine-readable item-placement report.
+- `source/stocked_fixtures/Stocked_Deli_Pizza_Master.blend`: editable Blender source with three original pizza meshes and the fully stocked counter.
+- `tools/build_stocked_fixtures.py`: reproducible build script, uses the other assets already in this repository, checks exact geometry and shelf-space constraints, exports one glTF binary per fixture.
+
+**Placement:** fronts face -Y, world Z is vertical, distances are metres. One loaded scene is one self-contained stocked fixture, so no separate product dependencies are needed at runtime. Materials retain GLB texture data and can be tuned in Unreal Engine 5.7. These are fictional brands only, avoiding direct use of retailer-owned package artwork. The stock layouts are intentionally curated environmental arrangements, not real Coop/Migros inventories.
+
+The glass-door version remains a fridge fixture, not a claim of functioning real refrigeration. Glass transparency, emissive LEDs, and exposure can need an Unreal material-instance/lighting adjustment. Prefer instancing repeated SKU meshes at runtime when spawning many complete store aisles.
