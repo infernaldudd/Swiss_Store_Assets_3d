@@ -1,0 +1,101 @@
+name: Build stocked supermarket shelves and refrigerators
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/build_stocked_fixtures.py"
+      - ".github/workflows/build-stocked-fixtures.yml"
+permissions:
+  contents: write
+concurrency:
+  group: swiss-stocked-store-fixtures
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install headless Blender 3D import/export and Pillow libraries
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-dejavu-core fonts-lato libegl1 libgl1-mesa-dri
+      - name: Build four stocked fixtures from original packaged product GLBs
+        run: |
+          blender -b -t 2 --python tools/build_stocked_fixtures.py
+          test "$(find assets/stocked_fixtures -maxdepth 1 -name '*.glb' | wc -l)" -eq 4
+          test -s source/stocked_fixtures/Stocked_Deli_Pizza_Master.blend
+          du -sh assets/stocked_fixtures/
+      - name: Render four stocked fixtures with exact model geometry and artwork
+        run: |
+          RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_stocked_fixtures.py
+          test "$(find previews/stocked_fixtures -maxdepth 1 -name '*.png' | wc -l)" -eq 4
+          rm -f source/stocked_fixtures/*.blend1
+      - name: Validate stock counts, unique original SKU sources and no collision flags
+        run: |
+          /usr/bin/python3 - <<'PY'
+          import json,glob,os,struct
+          a=json.load(open("previews/stocked_fixtures/Stocking_Report.json"))
+          expected={"shelf1","shelf2","chiller","deli"}
+          assert set(a["scenes"])==expected
+          for scene,info in a["scenes"].items():
+              assert not info["placement_failures"],(scene,info["placement_failures"])
+              assert info["units"]>=12
+              if scene=="chiller": assert info["units"]>=350
+              if scene=="deli": assert info["units"]==12
+              print("STOCKED SCENE",scene,"units",info["units"],"distinct SKUs",len(info["skus"]))
+          files=glob.glob("assets/stocked_fixtures/*.glb")
+          assert len(files)==4
+          for f in files:
+              with open(f,"rb") as stream:
+                  magic,ver,total=struct.unpack("<4sII",stream.read(12))
+                  size,typ=struct.unpack("<I4s",stream.read(8))
+                  model=json.loads(stream.read(size))
+              assert magic==b"glTF" and ver==2 and total==os.path.getsize(f)
+              assert model["meshes"] and model["materials"]
+              assert model.get("images")
+              assert any(n.get("name","").startswith(("ACTUAL STOCK |","STOCKED PIZZA |")) for n in model["nodes"])
+              print("VALIDATED GLB",f,os.path.getsize(f),"bytes")
+          PY
+      - name: Generate compact contact sheets of the four real Blender renders
+        run: |
+          /usr/bin/python3 - <<'PY'
+          from PIL import Image,ImageDraw,ImageFont
+          import os
+          d="previews/stocked_fixtures"
+          files=[
+            ("Swiss_Supermarket_Shelf_1m_Stocked","1m Grocery Shelf"),
+            ("Swiss_Supermarket_Shelf_2m_Stocked","2m Grocery Shelf"),
+            ("Swiss_Glass_Door_Chiller_8Doors_Stocked","8-Door Stocked Chiller"),
+            ("Swiss_Glass_Deli_Pizza_Counter_Stocked","Stocked Pizza Counter")]
+          im=Image.new("RGB",(1360,1010),(231,231,228))
+          dr=ImageDraw.Draw(im)
+          try:font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",28)
+          except OSError:font=ImageFont.load_default()
+          dr.text((26,11),"SWISS STORE | FOUR REAL STOCKED 3D FIXTURES",font=font,fill=(25,38,40))
+          for i,(name,title) in enumerate(files):
+              src=Image.open(os.path.join(d,name+".png")).convert("RGB")
+              src.thumbnail((636,408),Image.Resampling.LANCZOS)
+              x=(i%2)*680+22+(636-src.width)//2
+              y=(i//2)*479+65
+              im.paste(src,(x,y))
+              dr.text(((i%2)*680+32,(i//2)*479+470),title,font=font,fill=(27,37,42))
+          out=os.path.join(d,"Stocked_Fixtures_4_Models_QA.jpg")
+          im.save(out,quality=85,optimize=True)
+          print("QA CONTACT",out,os.path.getsize(out))
+          assert os.path.getsize(out)<1300000
+          PY
+      - name: Commit four stocked GLBs, editable deli source, evidence and product report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/stocked_fixtures/ previews/stocked_fixtures/ source/stocked_fixtures/
+          if ! git diff --cached --quiet; then
+            git commit -m "Add four stocked supermarket fixtures from actual grocery product GLBs"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
