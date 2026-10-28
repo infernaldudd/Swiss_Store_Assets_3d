@@ -1,0 +1,211 @@
+{
+  "title": "Swiss fictional canned foods | LOOP AMIGOS SparFix ALP PANTRY",
+  "version": 1,
+  "units": "metres",
+  "closed_models": 18,
+  "opened_hero_ids": [
+    "loop_ravioli_in_tomato_sauce",
+    "loop_sweetcorn"
+  ],
+  "items": [
+    {
+      "id": "loop_ravioli_in_tomato_sauce",
+      "brand": "LOOP",
+      "flavour": "Ravioli in Tomato Sauce",
+      "food": "ravioli",
+      "weight_g": 430,
+      "color": "#c7462d",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "loop_chopped_tomatoes",
+      "brand": "LOOP",
+      "flavour": "Chopped Tomatoes",
+      "food": "tomato",
+      "weight_g": 400,
+      "color": "#d64b38",
+      "size": "standard",
+      "opening": "classic",
+      "fictional": true
+    },
+    {
+      "id": "loop_sweetcorn",
+      "brand": "LOOP",
+      "flavour": "Sweetcorn",
+      "food": "corn",
+      "weight_g": 340,
+      "color": "#e9c33e",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "loop_garden_peas",
+      "brand": "LOOP",
+      "flavour": "Garden Peas",
+      "food": "peas",
+      "weight_g": 400,
+      "color": "#6b9a4d",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "loop_kidney_beans",
+      "brand": "LOOP",
+      "flavour": "Kidney Beans",
+      "food": "beans",
+      "weight_g": 400,
+      "color": "#873a44",
+      "size": "standard",
+      "opening": "classic",
+      "fictional": true
+    },
+    {
+      "id": "loop_coconut_milk",
+      "brand": "LOOP",
+      "flavour": "Coconut Milk",
+      "food": "coconut",
+      "weight_g": 400,
+      "color": "#e4d5b2",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "amigos_pelati_tomatoes",
+      "brand": "AMIGOS",
+      "flavour": "Pelati Tomatoes",
+      "food": "tomato",
+      "weight_g": 400,
+      "color": "#d74c26",
+      "size": "standard",
+      "opening": "classic",
+      "fictional": true
+    },
+    {
+      "id": "amigos_chickpeas",
+      "brand": "AMIGOS",
+      "flavour": "Chickpeas",
+      "food": "chickpea",
+      "weight_g": 400,
+      "color": "#c6a45e",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "amigos_champignon_slices",
+      "brand": "AMIGOS",
+      "flavour": "Champignon Slices",
+      "food": "mushroom",
+      "weight_g": 290,
+      "color": "#887a5c",
+      "size": "standard",
+      "opening": "classic",
+      "fictional": true
+    },
+    {
+      "id": "amigos_tomato_soup",
+      "brand": "AMIGOS",
+      "flavour": "Tomato Soup",
+      "food": "soup",
+      "weight_g": 400,
+      "color": "#d65f39",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "amigos_peach_halves",
+      "brand": "AMIGOS",
+      "flavour": "Peach Halves",
+      "food": "peach",
+      "weight_g": 420,
+      "color": "#e19d4f",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "amigos_pineapple_rings",
+      "brand": "AMIGOS",
+      "flavour": "Pineapple Rings",
+      "food": "pineapple",
+      "weight_g": 565,
+      "color": "#e8c449",
+      "size": "large",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "sparfix_baked_beans",
+      "brand": "SparFix",
+      "flavour": "Baked Beans",
+      "food": "beans",
+      "weight_g": 415,
+      "color": "#b94a31",
+      "size": "standard",
+      "opening": "classic",
+      "fictional": true
+    },
+    {
+      "id": "sparfix_mixed_vegetables",
+      "brand": "SparFix",
+      "flavour": "Mixed Vegetables",
+      "food": "vegetables",
+      "weight_g": 400,
+      "color": "#75a85c",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "alp_pantry_tuna_in_brine",
+      "brand": "ALP PANTRY",
+      "flavour": "Tuna in Brine",
+      "food": "tuna",
+      "weight_g": 160,
+      "color": "#2e789d",
+      "size": "tuna",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "alp_pantry_tuna_in_olive_oil",
+      "brand": "ALP PANTRY",
+      "flavour": "Tuna in Olive Oil",
+      "food": "tuna",
+      "weight_g": 160,
+      "color": "#39778a",
+      "size": "tuna",
+      "opening": "classic",
+      "fictional": true
+    },
+    {
+      "id": "alp_pantry_lentil_stew",
+      "brand": "ALP PANTRY",
+      "flavour": "Lentil Stew",
+      "food": "lentils",
+      "weight_g": 400,
+      "color": "#a17b41",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    },
+    {
+      "id": "alp_pantry_apricot_halves",
+      "brand": "ALP PANTRY",
+      "flavour": "Apricot Halves",
+      "food": "apricot",
+      "weight_g": 420,
+      "color": "#d58e38",
+      "size": "standard",
+      "opening": "easy",
+      "fictional": true
+    }
+  ],
+  "license_notice": "Original fictional in-game brand artwork. Not an official product, not a food item, not an actual nutritional label."
+}
