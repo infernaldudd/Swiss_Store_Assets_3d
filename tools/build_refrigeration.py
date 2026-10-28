@@ -111,7 +111,7 @@ def cube(name,pos,dim,mat,bevel=0):
     if bevel>0:
         b=o.modifiers.new("Real edge bevel","BEVEL")
         b.width=bevel;b.segments=3
-        o.modifiers.new("Face normals","WEIGHTED_NORMAL")
+        # Geometry bevel already gives real highlights without auto-smooth warnings.
     o[TAG]=True
     return o
 def cylinder(name,pos,r,depth,mat,axis="Z",n=36):
@@ -388,7 +388,7 @@ def chiller(M):
         door_root["is_hinged"]=True
         door_root["hinge_side"]="left";door_root["closed_degrees"]=0
         door_root["panel_width_m"]=door_pitch-.012
-        parts_before=set(S.objects)
+        parts_before=set(SC.objects)
         w=door_pitch-.019
         fh=1.974
         zmid=(.281+2.255)/2
@@ -433,7 +433,7 @@ def chiller(M):
         for zz in (.381,2.148):
             cylinder("DOOR HINGE | actual top and bottom spindle"+suffix,
                      (l+.018,door_y,zz),.016,.039,M["stainless"],"Z",24)
-        added=[o for o in S.objects if o not in parts_before and o.type=="MESH"]
+        added=[o for o in SC.objects if o not in parts_before and o.type=="MESH"]
         for obj in added:
             mx=obj.matrix_world.copy()
             obj.parent=door_root
