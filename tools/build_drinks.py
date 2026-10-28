@@ -18,6 +18,7 @@ from mathutils import Vector
 ROOT=os.path.abspath(os.path.join(os.path.dirname(__file__),".."))
 OUT=os.path.join(ROOT,"assets","drinks")
 ART=os.path.join(ROOT,"textures","drinks")
+FIN=os.path.join(ROOT,"textures","surface_finishes")
 PREV=os.path.join(ROOT,"previews","drinks")
 os.makedirs(OUT,exist_ok=True)
 os.makedirs(PREV,exist_ok=True)
@@ -58,6 +59,29 @@ def material(name,c,metal=0,rough=.4,art=None,alpha=1):
         tex.interpolation="Linear"
         m.node_tree.links.new(tex.outputs["Color"],p.inputs["Base Color"])
     return m
+
+def apply_finish(mat,roughness_map,normal_strength=0.0):
+    """Real material-dependent micro roughness—not uniform glossy plastic."""
+    bs=mat.node_tree.nodes.get("Principled BSDF")
+    def tex(filename):
+        path=os.path.join(FIN,filename+".png")
+        assert os.path.isfile(path),path
+        im=bpy.data.images.load(path,check_existing=True)
+        im.colorspace_settings.name="Non-Color"
+        im.pack()
+        node=mat.node_tree.nodes.new("ShaderNodeTexImage")
+        node.image=im
+        node.extension="REPEAT"
+        return node
+    r=tex(roughness_map)
+    mat.node_tree.links.new(r.outputs["Color"],bs.inputs["Roughness"])
+    if normal_strength>0:
+        bump=tex("Soft_Micro_Normal")
+        nm=mat.node_tree.nodes.new("ShaderNodeNormalMap")
+        nm.inputs["Strength"].default_value=normal_strength
+        mat.node_tree.links.new(bump.outputs["Color"],nm.inputs["Color"])
+        mat.node_tree.links.new(nm.outputs["Normal"],bs.inputs["Normal"])
+    return mat
 
 def clear():
     bpy.ops.object.select_all(action="SELECT")
@@ -202,7 +226,7 @@ def can(p,label,metal,lid):
 def pet(p,label,metal,lid):
     name,flavor,form,color,ml=p
     h=.212;r=.033
-    resin=material("PET | clear tinted polymer",(.78,.88,.91),metal=0,rough=.18,alpha=.78)
+    resin=apply_finish(material("PET | clear tinted polymer",(.78,.88,.91),metal=0,rough=.18,alpha=.78),"PET_Bottle_Roughness",.10)
     juice=material("PET | contained beverage",tuple(min(.99,.27+c*.65) for c in color),0,.15)
     lathe("PET | injection stretch blown transparent bottle",[
         (.019,.002),(.027,.004),(.031,.012),(.033,.031),
@@ -248,11 +272,12 @@ def carton(p,label,metal,lid):
 
 def build(p):
     name,flavor,form,color,ml=p
-    ink=material("UV PRINT | "+name,color,.22 if form=="can" else .02,
+    ink=material("UV PRINT | "+name,color,.38 if form=="can" else .02,
                  .29 if form=="can" else .57,
                  art=name.replace(" ","_")+"_wrap_2K.png")
-    aluminum=material("METAL | brushed aluminium",(.66,.69,.70),.85,.27)
-    lid=material("LID | satin silver press",(.74,.76,.76),.72,.34)
+    apply_finish(ink,"Glossy_Laminated_Print_Roughness" if form=="can" else ("SemiGloss_Vinyl_Roughness" if form=="pet" else "Matte_Paper_Roughness"),.13 if form=="can" else 0)
+    aluminum=apply_finish(material("METAL | brushed aluminium",(.66,.69,.70),.85,.27),"Brushed_Steel_Roughness",.13)
+    lid=apply_finish(material("LID | satin silver press",(.74,.76,.76),.72,.34),"Foil_Lid_Roughness",.08)
     if form=="can": can(p,ink,aluminum,lid)
     elif form=="pet":pet(p,ink,aluminum,lid)
     else:carton(p,ink,aluminum,lid)
@@ -303,8 +328,8 @@ def preview(name):
     floor=material("PREVIEW ONLY | light terrazzo",(.43,.46,.47),.05,.66)
     box("PREVIEW ONLY | store shelf",(0,0,-.019),(.5,.5,.028),floor,.002)
     for loc,power,size in [
-         ((-.22,-.28,.35),82,.34),
-         ((.16,.13,.36),58,.26)]:
+         ((-.22,-.28,.35),42,.34),
+         ((.16,.13,.36),31,.26)]:
         bpy.ops.object.light_add(type="AREA",location=loc)
         obj=C.object;obj.name="PREVIEW ONLY | area light"
         obj.data.energy=power;obj.data.size=size
