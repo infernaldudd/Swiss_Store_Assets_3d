@@ -78,3 +78,28 @@ blender -b -t 2 --python tools/render_chip_library_overview.py
 - [2024 historical Swiss product listing](https://www.igb.ch/wp-content/uploads/2024/08/Koscherliste.IGB_.20240816-2.pdf)
 
 All artwork is original and references are for in-game environmental design, not exact retail product reproductions.
+
+## Instant noodle cups — 8 sealed packs + opened hero
+
+All packaging is original and fictional, for Swiss grocery store shelves in Helvetia and GundeliTheftAuto7 (not real Coop/Migros/Nissin products). Product variants:
+
+- LOOP Chicken, Beef, Curry (65 g)
+- AMIGOS Spicy Chicken, Vegetable, Hot Curry (70 g)
+- SparFix Budget Original (65 g)
+- ALP RAMEN Fire & Chili Premium (85 g)
+- An additional **opened ALP RAMEN hero** with peeled foil, three-dimensional curly noodles, broth, chopped spring onion, carrot, corn, chili flakes and tofu.
+
+Each closed model is independently exported under `assets/noodle_cups/<name>_Closed.glb`. The opened hero is `assets/noodle_cups/ALP_Ramen_Extra_Hot_OPEN_HERO.glb`; its packed Blender source is `source/ALP_Ramen_Extra_Hot_OPEN_HERO.blend`. These game objects are hollow tapered cups with a lightly irregular paper sleeve, printed foil lid, bent pull tab, moulded rolled rim, PP-style inner surface, and basal foot. PBR artwork and material maps are in `textures/noodle_cups/` (embedded in the GLBs). The dimensions are modelled in metres, and the cup circumference is UV-mapped so the printed product label faces world -Y. The 3D hero is not edible or certified packaging.
+
+An artwork contact sheet and four CPU renders are available under `previews/noodle_cups/`. Geometry QA checks GLB 2.0 headers, independently exported meshes, printed UVs, PBR images, and nonempty file sizes. The render files are useful for review but should not be treated as a guarantee of scan-level photorealism.
+
+To reproduce from Python / Blender (system Python with Pillow, NumPy and Lato fonts):
+
+```bash
+/usr/bin/python3 tools/generate_noodle_cup_textures.py
+/usr/bin/python3 tools/make_noodle_cups_contact_sheet.py
+blender -b -t 2 --python tools/build_noodle_cups.py
+RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_noodle_cups.py
+```
+
+In Unreal Engine 5.7 import the GLBs with the glTF importer. For the hero, adjust the broth / noodle mats separately as needed. Shared foil and paper artwork allows future flavour expansions with the generator.
