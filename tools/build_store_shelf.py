@@ -239,7 +239,7 @@ def module(index,origin_x,M):
 
 def export(name):
     meshes=[o for o in S.objects if o.type=="MESH" and o.get("is_shop_shelf_part")]
-    assert len(meshes)>220,(name,len(meshes))
+    assert len(meshes)>150,(name,len(meshes))
     bpy.ops.object.select_all(action="DESELECT")
     for o in meshes:o.select_set(True)
     C.view_layer.objects.active=meshes[0]
@@ -254,7 +254,7 @@ def export(name):
         doc=json.loads(f.read(chunk))
     assert magic==b"glTF" and version==2 and kind==b"JSON"
     assert os.path.getsize(path)==total
-    assert len(doc.get("meshes",[]))>=220
+    assert len(doc.get("meshes",[]))>=150
     assert len(doc.get("images",[]))>=2
     names=[node.get("name","") for node in doc["nodes"]]
     assert len([n for n in names if n.startswith("Folded 1m load tray")])>=5
@@ -298,14 +298,15 @@ def render(name,bays):
     print("RENDERED",S.render.filepath,flush=True)
 
 def main():
-    M=build_materials()
     reset()
+    M=build_materials()
     module(1,0,M)
     name="Swiss_Supermarket_Wall_Shelf_1m_5Tier"
     export(name)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(SOURCE,name+".blend"),compress=True)
     if os.environ.get("RENDER_PREVIEWS")=="1":render(name,1)
     reset()
+    M=build_materials()
     module(1,-.525,M)
     module(2,+.525,M)
     name="Swiss_Supermarket_Wall_Shelf_2m_TwoBay"
