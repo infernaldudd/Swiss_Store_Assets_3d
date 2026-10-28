@@ -212,8 +212,18 @@ def place_line(keys,width,x_center,y,z,scene,limits,multipliers=None):
  dims=[getproto(k)[2] for k in expanded]
  gap=.012
  total=sum(d.x for d in dims)+gap*(len(dims)-1)
- if total>width:
-  raise AssertionError("Too many products across "+scene+": "+str((expanded,total,width)))
+ # Facings are packed as tightly as physical retail widths allow. If a
+ # large chips packet needs more space than a narrow can, reduce only the
+ # overfull group's count rather than squeezing or interpenetrating packages.
+ while total>width and len(expanded)>len(keys):
+  counts={k:expanded.count(k) for k in set(expanded)}
+  removable=[k for k in counts if counts[k]>1]
+  assert removable
+  widest=max(removable,key=lambda k:counts[k]*getproto(k)[2].x)
+  expanded.pop(max(i for i,v in enumerate(expanded) if v==widest))
+  dims=[getproto(k)[2] for k in expanded]
+  total=sum(d.x for d in dims)+gap*(len(dims)-1)
+ assert total<=width,(scene,expanded,total,width)
  x=x_center-total/2
  for key,d in zip(expanded,dims):
   center=x+d.x/2
