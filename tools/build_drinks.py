@@ -319,6 +319,12 @@ def preview(name):
     SCENE.render.engine="CYCLES"
     SCENE.cycles.device="CPU"
     SCENE.cycles.samples=22
+    # Ubuntu's Blender package does not include OpenImageDenoiser.
+    # Avoid a preview-only crash after the GLB export already passed.
+    if hasattr(SCENE.cycles,"use_denoising"):
+        SCENE.cycles.use_denoising=False
+    if hasattr(C.view_layer.cycles,"use_denoising"):
+        C.view_layer.cycles.use_denoising=False
     SCENE.render.resolution_x=800
     SCENE.render.resolution_y=950
     SCENE.render.resolution_percentage=100
