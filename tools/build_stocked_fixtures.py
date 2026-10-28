@@ -93,6 +93,19 @@ def load_fixture(which):
  objects=[o for o in SC.objects if o.type=="MESH"]
  assert len(objects)>100,(which,len(objects))
  for o in objects:o["export_stocked_scene"]=True
+ if which=="chiller":
+  # An exaggerated 12%-alpha pale glass coating made the original product
+  # colors too milky in Cycles. Keep real 7mm glazing, transparent material
+  # and reflective metal frames, but prioritize seeing the actual inventory.
+  for m in bpy.data.materials:
+   if "glazed insulating multi-door panels" in m.name.lower():
+    bs=m.node_tree.nodes.get("Principled BSDF") if m.use_nodes else None
+    if bs:
+     bs.inputs["Alpha"].default_value=.035
+     bs.inputs["Roughness"].default_value=.045
+     bs.inputs["Base Color"].default_value=(.92,.96,.99,1)
+     m.blend_method="BLEND"
+  print("CHILLER | optimized clear-glass stock visibility",flush=True)
  print("FIXTURE LOADED",which,len(objects),"mesh parts",flush=True)
 def ancestors(o):
  p=o.parent
@@ -216,11 +229,11 @@ def populate_shelf(which,scene):
  centers=[0.] if bays==1 else [-.525,.525]
  z_levels=(.241,.620,.999,1.378,1.757)
  design=[
-   (["paprika","natural"],[2,2],["ravioli","corn","peas"],[3,3,2]),
-   (["noodles","noodles2"],[3,3],["noodles3","tuna"],[3,3]),
-   (["bbq","truffle"],[2,2],["tomato","peach"],[3,3]),
-   (["cola","orange","energy"],[3,3,3],["cola","energy"],[3,3]),
-   (["smoky","beet"],[2,2],["noodles","noodles2"],[3,3]),
+   (["paprika","natural"],[3,3],["ravioli","corn","peas"],[4,3,3]),
+   (["noodles","noodles2"],[4,4],["noodles3","tuna"],[4,4]),
+   (["bbq","truffle"],[3,3],["tomato","peach"],[4,4]),
+   (["cola","orange","energy"],[3,3,4],["cola","energy"],[4,4]),
+   (["smoky","beet"],[3,3],["noodles","noodles2"],[4,4]),
  ]
  for bay,center in enumerate(centers):
   # vary stock arrangement between modules without altering shelf geometry.
