@@ -190,16 +190,15 @@ def build_amigos():
     return 5.20, 1.10
 
 def build_double_a():
-    # Referencing Swiss storefronts with two projecting illuminated M letters:
-    # fictional AMIGOS uses A initials, one above another.
+    # Revision: two freestanding fabricated A-channel letters, no black
+    # rectangles/backing boards and no AMIGOS wordmark beneath the lower A.
+    # Keep the original face shapes, proportions and side-mounted hardware.
     for i, z in enumerate((0.68, -0.68), 1):
         mesh_text('A', 'AMIGOS | projecting A %d'%i, 1.02, z,
                   FONT_SIGN, RETURN_AMIGOS, [FRONTS_AMIGOS[0]],
                   0.18, center_x=-0.04, forward_y=-0.25)
-        # White rear sign enclosure, concealed from the front view
-        cube('projecting sign rear housing %d'%i, (0.0, -0.083, z),
-             (0.94, 0.07, 1.02), DARK_STEEL, 0.015)
-    # Heavy-gauge bracket mounts to facade. Wall is on positive Y.
+    # Narrow metal cantilever mounting rail, intentionally positioned to the
+    # right of the letter silhouettes so the gaps stay transparent.
     cube('main vertical rear mounting rail', (0.52, 0.035, 0.0),
          (0.085, 0.16, 2.29), STEEL, 0.012)
     for z in (-0.85, 0.0, 0.85):
@@ -210,11 +209,10 @@ def build_double_a():
     for z in (-0.68, 0.68):
         cube('forward mounting arm %.2f'%z, (0.26, -0.035, z),
              (0.53, 0.07, 0.07), STEEL, 0.010)
-    # Discreet full-name manufacturer plaque, as this is an A-shaped logo sign.
-    mesh_text('AMIGOS', 'AMIGOS | identity plaque', 0.57, -1.35,
-              FONT_SECONDARY, RETURN_AMIGOS, [FRONTS_AMIGOS[1]], 0.036,
-              center_x=-0.02, forward_y=-0.16)
-    return 1.10, 3.04
+    assert not any('rear housing' in o.name.lower()
+                   or 'identity plaque' in o.name.lower()
+                   for o in bpy.context.scene.objects), 'A backing panel leaked in'
+    return 1.10, 2.50
 
 def aim(obj, target):
     obj.rotation_euler = (Vector(target) - obj.location).to_track_quat('-Z','Y').to_euler()
