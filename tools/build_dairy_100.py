@@ -1,14 +1,13 @@
-"""Build five Unreal-compatible GLB scenes, each with 20 distinct dairy SKUs.
+"""Build 100 separate dairy SKU GLBs, each holding 5–20 matching retail units.
 
-One GLB per batch, but **all 20 products have separate named parent nodes**,
-and each contains genuine 3D submeshes (printed cartons, tapered yoghurt cups,
-glass/PET bottles, shaped cheese packs, butter bricks, round cheese wheels,
-tray cheeses, yoghurt tubs, folded pouches, aerosol cream, and condensed milk).
+Five folders organize the 100 genuinely different products (20 SKUs per
+folder), but each exported file is ONE SKU's stock batch, e.g. 12 identical
+milk cartons or 8 identical cheese packages. Each unit remains an independently
+named instance sharing geometry/material data to minimize file size.
 
-No merged 20-product geometry. Import GLB as a scene preserving hierarchy to
-move individual products. Dimensions are meters; units Z-up in Blender.
  Blender -b -t 2 --python tools/build_dairy_100.py
 """
+
 import bpy,os,json,math,struct,random
 from mathutils import Vector
 ROOT=os.path.abspath(os.path.join(os.path.dirname(__file__),".."))
@@ -299,79 +298,126 @@ def one_product(p,batch_i,k):
   o["product_id"]=named
  root["physical_height_m"]=round(height,4)
  return root,len(new)
-def export_batch(batch):
- reset()
- roots=[]
- count=0
- for k,p in enumerate(batch["products"]):
-  root,n=one_product(p,batch["batch_number"],k)
-  roots.append(root);count+=n
-  if k%5==0:print("MODEL",batch["name"],k+1,"/",len(batch["products"]),p["id"],flush=True)
- bpy.ops.object.select_all(action="DESELECT")
- for obj in S.objects:
-  if obj.type in ("MESH","EMPTY"):obj.select_set(True)
- C.view_layer.objects.active=roots[0]
- path=os.path.join(OUT,"Batch_%02d_%s_20_Distinct_Products.glb"%(
-      batch["batch_number"],batch["name"]))
- bpy.ops.export_scene.gltf(filepath=path,export_format="GLB",
-    use_selection=True,export_materials="EXPORT",
-    export_yup=True,export_apply=True,
-    export_draco_mesh_compression_enable=False)
- with open(path,"rb") as f:
-  magic,ver,total=struct.unpack("<4sII",f.read(12))
-  n,ctype=struct.unpack("<I4s",f.read(8))
-  metadata=json.loads(f.read(n))
- assert magic==b"glTF" and ver==2 and total==os.path.getsize(path)
- assert ctype==b"JSON"
- assert len(metadata.get("meshes",[]))>=20
- assert len(metadata.get("images",[]))>=20
- nodes=metadata["nodes"]
- for k,p in enumerate(batch["products"]):
-  assert any(p["name"].lower() in node.get("name","").lower()
-             for node in nodes),(p["id"],"missing individual parent name")
- assert count>50,(count,"not enough real 3D pieces")
- print("VALIDATED BATCH",batch["name"],"20 INDEPENDENT SKU ROOTS",
-       count,"3D pieces",len(metadata["meshes"]),"glTF meshes",
-       len(metadata["images"]),"image textures",total,"bytes",flush=True)
- return path
-def export_individual(p,batch):
- reset()
- root,n=one_product(p,batch["batch_number"],p["slot"]-1)
- # Product object coordinates are local to its SKU root. Reset root to
- # world origin for easy drag-and-drop placement in Unreal.
- root.location=(0,0,0)
- bpy.ops.object.select_all(action="DESELECT")
- root.select_set(True)
- objects=[o for o in S.objects if o.type=="MESH" and o.parent==root]
- for o in objects:o.select_set(True)
- C.view_layer.objects.active=root
- destination=os.path.join(OUT,"Batch_%02d_%s"%(batch["batch_number"],batch["name"]))
- os.makedirs(destination,exist_ok=True)
- filepath=os.path.join(destination,p["id"]+".glb")
- bpy.ops.export_scene.gltf(filepath=filepath,export_format="GLB",
-     use_selection=True,export_materials="EXPORT",export_yup=True,
-     export_apply=True,export_draco_mesh_compression_enable=False)
- with open(filepath,"rb") as stream:
-  magic,version,total=struct.unpack("<4sII",stream.read(12))
-  chunk,typecode=struct.unpack("<I4s",stream.read(8))
-  gltf=json.loads(stream.read(chunk))
- assert magic==b"glTF" and version==2 and typecode==b"JSON"
- assert total==os.path.getsize(filepath)
- assert len(gltf.get("meshes",[]))>=2
- assert len(gltf.get("images",[]))>=1
- assert any(p["name"].lower() in node.get("name","").lower() for node in gltf["nodes"])
- assert len(objects)==n
- print("SINGLE SKU VALIDATED",p["id"],n,"parts",total,"bytes",flush=True)
+
+# (columns, rows, horizontal pitch, depth pitch). These correspond to
+# case/shelf stock groups, never mixed products. Front labels face -Y.
+STOCK_LAYOUTS={
+ "carton":(4,3,.084,.082),  # 12 separate one-litre milk cartons
+ "bottle":(3,3,.086,.086),  # 9 separate dairy-drink bottles
+ "cup":(4,4,.094,.091),     # 16 individually sealed yoghurt pots
+ "tub":(4,3,.105,.102),     # 12 quark/soft cheese tubs
+ "wedge":(4,2,.084,.060),   # 8 separately vacuum-sealed cheese wedges
+ "tray":(5,2,.117,.087),    # 10 independent cheese trays
+ "pouch":(4,3,.109,.033),   # 12 vertical grated-cheese bags
+ "round":(4,2,.119,.119),   # 8 round cheese packs
+ "brick":(4,3,.114,.060),   # 12 foil-wrapped butter packs
+ "spray":(3,2,.075,.075),   # 6 cream aerosol cans
+ "can":(4,3,.084,.083),     # 12 milk tins
+}
+def export_product_stock_batch(p,batch):
+    """Export a single SKU as a group of actual duplicate packaged units.
+
+    Units have separate transforms and hierarchy nodes (not one stretched
+    mesh). All 5–20 stock packages refer to the same distinct product.
+    A copy of each prototype mesh is linked rather than rebuilding 20
+    textures and shapes, so the game-ready GLB can share geometry buffers.
+    """
+    reset()
+    root,parts=one_product(p,batch["batch_number"],p["slot"]-1)
+    root.name="PRODUCT BATCH | "+p["id"]
+    root.location=(0,0,0)
+    original=[o for o in S.objects if o.type=="MESH" and o.parent==root]
+    assert len(original)==parts and parts>=2,(p["id"],parts,len(original))
+    count=int(p["stock_units_per_glb"])
+    cols,rows,dx,dy=STOCK_LAYOUTS[p["shape"]]
+    assert count==cols*rows,(p["id"],count,cols,rows)
+    assert 5<=count<=20
+    root["batch_unit_count"]=count
+    root["batch_contains_single_sku"]=True
+    root["product_sku_id"]=p["id"]
+    root["is_retail_stock_batch"]=True
+    # Make all unit parents first at the origin, so re-parenting doesn't
+    # disturb Blender's existing product-space vertex coordinates.
+    parents=[]
+    for i in range(count):
+        group=bpy.data.objects.new("STOCK_UNIT_%03d | %s"%(i+1,p["id"]),None)
+        C.collection.objects.link(group)
+        group.parent=root
+        group.empty_display_type="PLAIN_AXES"
+        group.empty_display_size=.010
+        group["unit_index"]=i+1
+        group["sku_id"]=p["id"]
+        parents.append(group)
+    # Unit 001 owns the prototype meshes.
+    for ob in original:
+        ob.parent=parents[0]
+    # Later unit meshes reuse the SAME mesh datablocks and image materials.
+    # Modifiers are still independent on object copies where present.
+    for group in parents[1:]:
+        for ob in original:
+            clone=ob.copy()
+            clone.name=ob.name+" | "+group.name.split(" | ")[0]
+            clone.data=ob.data
+            C.collection.objects.link(clone)
+            clone.parent=group
+            clone["unit_index"]=group["unit_index"]
+    # Now arrange units in an evenly spaced, shelf-ready multipack.
+    for i,group in enumerate(parents):
+        col=i%cols
+        row=i//cols
+        group.location=((col-(cols-1)/2)*dx,(row-(rows-1)/2)*dy,0)
+    C.view_layer.update()
+    exported_parts=[o for o in S.objects if o.type=="MESH"]
+    assert len(exported_parts)==parts*count,(
+        p["id"],len(exported_parts),parts,count)
+    # Explicit select only this SKU hierarchy, never another SKU.
+    bpy.ops.object.select_all(action="DESELECT")
+    root.select_set(True)
+    for group in parents:group.select_set(True)
+    for ob in exported_parts:ob.select_set(True)
+    C.view_layer.objects.active=root
+    destination=os.path.join(OUT,"Batch_%02d_%s"%(batch["batch_number"],batch["name"]))
+    os.makedirs(destination,exist_ok=True)
+    filepath=os.path.join(destination,p["id"]+".glb")
+    bpy.ops.export_scene.gltf(filepath=filepath,export_format="GLB",
+        use_selection=True,export_materials="EXPORT",export_extras=True,
+        export_yup=True,export_apply=True,
+        export_draco_mesh_compression_enable=False)
+    with open(filepath,"rb") as stream:
+        magic,version,total=struct.unpack("<4sII",stream.read(12))
+        chunk,typecode=struct.unpack("<I4s",stream.read(8))
+        gltf=json.loads(stream.read(chunk))
+    assert magic==b"glTF" and version==2 and typecode==b"JSON"
+    assert total==os.path.getsize(filepath)
+    assert len(gltf.get("meshes",[]))>=2
+    assert len(gltf.get("images",[]))>=1
+    exported_units=[n for n in gltf["nodes"] if
+        n.get("name","").startswith("STOCK_UNIT_")]
+    assert len(exported_units)==count,(
+        p["id"],len(exported_units),"expected stock units",count)
+    assert all(p["id"] in n.get("name","") for n in exported_units)
+    assert any(p["id"] in n.get("name","") for n in gltf["nodes"])
+    # Each stock unit should actually have at least two child mesh parts.
+    idx_map={i:n for i,n in enumerate(gltf["nodes"])}
+    for unit in exported_units:
+        child_ids=unit.get("children",[])
+        assert len(child_ids)>=2,(p["id"],unit["name"],len(child_ids))
+        assert sum("mesh" in idx_map[i] for i in child_ids)>=2,(p["id"],unit["name"])
+    print("VALIDATED STOCK GLB",p["id"],count,"physical units",
+          parts,"mesh parts per unit",
+          len(gltf["meshes"]),"gltf meshes",
+          len(gltf["images"]),"label textures",total,"bytes",flush=True)
 
 def main():
- assert len(CAT["batches"])==5 and CAT["count"]==100
- for b in CAT["batches"]:
-  assert len(b["products"])==20
-  for p in b["products"]:
-   export_individual(p,b)
-  print("FINISHED 20 individual GLBs in",b["name"],flush=True)
- import glob
- files=glob.glob(os.path.join(OUT,"Batch_*","*.glb"))
- assert len(files)==100,(len(files),"expected 100 separate GLBs")
- print("ALL DONE: 100 genuinely different dairy products, 100 SEPARATE GLB FILES",flush=True)
+    assert len(CAT["batches"])==5 and CAT["count"]==100
+    for batch in CAT["batches"]:
+        assert len(batch["products"])==20
+        for p in batch["products"]:
+            export_product_stock_batch(p,batch)
+        print("FINISHED 20 distinct retail stock GLBs in",batch["name"],flush=True)
+    import glob
+    files=glob.glob(os.path.join(OUT,"Batch_*","*.glb"))
+    assert len(files)==100,(len(files),"expected 100 product batch GLBs")
+    print("SUCCESS: 100 DISTINCT DAIRY PRODUCTS; ONE GLB PER SKU;",
+          "EACH GLB CONTAINS 5–20 IDENTICAL PHYSICAL RETAIL PACKAGES",flush=True)
 if __name__=="__main__":main()
