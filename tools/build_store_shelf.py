@@ -71,11 +71,11 @@ def material(name,col,metal=.0,rough=.45,roughmap=None,normalmap=None,texture=No
 
 def build_materials():
     return {
-     "paint":material("POWDER-COAT | warm white enamel",(.70,.735,.735),.15,.41,
+     "paint":material("POWDER-COAT | warm white enamel",(.66,.685,.70),.15,.41,
                       "Powdercoat_Steel_Roughness.png","Soft_Micro_Normal.png"),
      "lip":material("PAINTED STEEL | semi-gloss edge protective coat",
-                    (.78,.815,.82),.24,.33,"SemiGloss_Vinyl_Roughness.png"),
-     "steel":material("GALVANISED STEEL | exposed pressed parts",(.58,.62,.64),.82,.27,
+                    (.65,.695,.71),.24,.33,"SemiGloss_Vinyl_Roughness.png"),
+     "steel":material("GALVANISED STEEL | exposed pressed parts",(.53,.58,.60),.82,.27,
                       "Brushed_Steel_Roughness.png","Soft_Micro_Normal.png"),
      "dark":material("RECESSED SLOTS | recessed graphite steel",(.17,.20,.21),.67,.37),
      "rubber":material("RUBBER | anti-slide foot and endcaps",(.09,.10,.105),.0,.82),
@@ -269,9 +269,9 @@ def render(name,bays):
     box("PREVIEW ONLY | floor",(0,0,-.027),
         (4.0,3.5,.047),floor,.004)
     for pos,power,size in [
-        ((-1.2,-1.5,3.4),1350,2.3),
-        ((1.5,-1.0,2.5),990,1.6),
-        ((0.25,.95,3.2),530,2.2)]:
+        ((-1.2,-1.5,3.4),440,2.3),
+        ((1.5,-1.0,2.5),290,1.6),
+        ((0.25,.95,3.2),165,2.2)]:
         bpy.ops.object.light_add(type="AREA",location=pos)
         o=C.object;o.name="PREVIEW ONLY | softbox"
         o.data.energy=power;o.data.size=size
@@ -287,7 +287,7 @@ def render(name,bays):
     S.cycles.device="CPU";S.cycles.samples=22
     if hasattr(S.cycles,"use_denoising"):S.cycles.use_denoising=False
     if hasattr(C.view_layer.cycles,"use_denoising"):C.view_layer.cycles.use_denoising=False
-    S.world.color=(.25,.25,.25)
+    S.world.color=(.15,.15,.15)
     S.view_settings.view_transform="AgX"
     S.render.resolution_x=1000 if bays==1 else 1380
     S.render.resolution_y=1130
