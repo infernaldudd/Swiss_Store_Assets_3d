@@ -1,0 +1,51 @@
+name: Build fictional Swiss instant noodle cups
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/generate_noodle_cup_textures.py"
+      - "tools/build_noodle_cups.py"
+      - "tools/make_noodle_cups_contact_sheet.py"
+      - ".github/workflows/build-noodle-cups.yml"
+permissions:
+  contents: write
+concurrency:
+  group: swiss-noodle-cups-v1
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Install Blender, typography and artwork libraries
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-lato libegl1 libgl1-mesa-dri
+      - name: Generate eight original wrap and foil-lid textures
+        run: |
+          /usr/bin/python3 tools/generate_noodle_cup_textures.py
+          test "$(find textures/noodle_cups -name '*_Wrap.png' | wc -l)" -eq 8
+          test "$(find textures/noodle_cups -name '*_Lid.png' | wc -l)" -eq 8
+          /usr/bin/python3 tools/make_noodle_cups_contact_sheet.py
+      - name: Build and validate nine independent textured 3D GLBs
+        run: |
+          blender -b -t 2 --python tools/build_noodle_cups.py
+          test "$(find assets/noodle_cups -name '*.glb' | wc -l)" -eq 9
+          test -s source/ALP_Ramen_Extra_Hot_OPEN_HERO.blend
+          ls -lh assets/noodle_cups/
+      - name: CPU render three shelf cups and one opened hero cup
+        run: |
+          RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_noodle_cups.py
+          test "$(find previews/noodle_cups -name '*.png' | wc -l)" -eq 4
+      - name: Commit nine GLBs, original textures, source and previews
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/noodle_cups/ textures/noodle_cups/ previews/noodle_cups/ source/ALP_Ramen_Extra_Hot_OPEN_HERO.blend catalog/noodle_cups.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Add eight noodle cup packs and one open ramen hero asset"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
