@@ -182,13 +182,20 @@ def pouch(name,w,d,h,ink,edge,smooth=True,sealed=True):
    faces.append(ff if i==nx else ff[::-1])
    uv.append([(.02,0),(.22,0),(.22,1),(.02,1)])
  a=mesh(name+" | inflated wrinkled sealed physical bag",v,faces,ink,uv,True)
- for z,sz in ((.006,.012),(h-.006,.012)):
-  # Sealed cross-seam is foil material separate from print, with pressed ribs
-  cube(name+" | realistic folded end seam",(0,0,z),(w+.002,d*.64,sz),edge,.0017)
+ for z,sz in ((.008,.016),(h-.014,.030)):
+  # Real 16–30mm folded factory seams close the ENTIRE mouth, with
+  # pale satin foil on the horizontal top surface. Narrow old 12mm strips
+  # left exposed dark UV edge bands that looked like black geometric holes.
+  cube(name+" | real sealed full-depth folded end seam",
+       (0,0,z),(w+.004,d*1.04,sz),edge,.0018)
   for r in range(13):
    x=-w*.48+r*w*.96/12
-   cube(name+" | crimp rib",(x,-d*.33,z),
-        (.0012,.0013,sz*.62),edge,.0002)
+   cube(name+" | pressed crimp-rib detail",(x,-d*.47,z),
+        (.0012,.0012,sz*.64),edge,.0003)
+ # Additional continuous capped top overfold fixes any remaining apparent
+ # open slit from the two shell faces when viewed from above.
+ cube(name+" | continuous closed upper end fold",
+      (0,0,h+.001),(w+.003,d*.98,.005),edge,.001)
  cube(name+" | rear central fusion seal",(0,d*.51,h*.5),
       (.005,d*.030,h*.78),edge,.0006)
  return a
