@@ -40,6 +40,7 @@ jobs:
           RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_store_shelf.py
           test -s previews/shelving/Swiss_Supermarket_Wall_Shelf_1m_5Tier.png
           test -s previews/shelving/Swiss_Supermarket_Wall_Shelf_2m_TwoBay.png
+          rm -f source/shelving/*.blend1
       - name: Commit game-ready shelving and textures to main
         run: |
           git config user.name "github-actions[bot]"
@@ -47,6 +48,10 @@ jobs:
           git add -A assets/shelving/ previews/shelving/ source/shelving/ textures/shelving/ textures/surface_finishes/
           if ! git diff --cached --quiet; then
             git commit -m "Add modular realistic powder-coat supermarket shelves with PBR and CHF rails"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then exit 0; fi
+              sleep 3
+            done
+            exit 1
           fi
