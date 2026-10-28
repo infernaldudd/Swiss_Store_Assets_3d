@@ -2,8 +2,8 @@
   "title": "Helvetia 100 distinctive Swiss dairy products",
   "count": 100,
   "batch_size": 20,
-  "output_files": 5,
-  "important": "100 distinct SKUs each with independently named meshes and original artwork. Not 100 copies of one shape. Each batch is one GLB scene containing 20 individually selectable products.",
+  "output_files": 100,
+  "important": "There are 100 DIFFERENT dairy SKUs, delivered as 100 SEPARATE GLB files. Each GLB physically includes a stock batch of 5–20 copies of the SAME product (not a single package, and not mixed-SKU GLBs). Files are organized in five folders with 20 different SKU GLBs each.",
   "packaging_shapes": [
     "carton",
     "bottle",
@@ -31,7 +31,8 @@
           "shape": "carton",
           "color": "#3c7fae",
           "slot": 1,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_milchdrink_1_5",
@@ -41,7 +42,8 @@
           "shape": "carton",
           "color": "#5cb3cf",
           "slot": 2,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_magermilch_0_1",
@@ -51,7 +53,8 @@
           "shape": "carton",
           "color": "#8dc8dd",
           "slot": 3,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_uht_vollmilch",
@@ -61,7 +64,8 @@
           "shape": "carton",
           "color": "#305a99",
           "slot": 4,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_uht_milchdrink",
@@ -71,7 +75,8 @@
           "shape": "carton",
           "color": "#5696bd",
           "slot": 5,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_laktosefrei_vollmilch",
@@ -81,7 +86,8 @@
           "shape": "carton",
           "color": "#886bc1",
           "slot": 6,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_laktosefrei_drink",
@@ -91,7 +97,8 @@
           "shape": "carton",
           "color": "#b18bc3",
           "slot": 7,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_bio_vollmilch",
@@ -101,7 +108,8 @@
           "shape": "carton",
           "color": "#4a9a56",
           "slot": 8,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_bio_milchdrink",
@@ -111,7 +119,8 @@
           "shape": "carton",
           "color": "#67b37c",
           "slot": 9,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_bergmilch",
@@ -121,7 +130,8 @@
           "shape": "carton",
           "color": "#496b97",
           "slot": 10,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "alp_farm_weidemilch",
@@ -131,7 +141,8 @@
           "shape": "bottle",
           "color": "#398daf",
           "slot": 11,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "alp_farm_jersey_milch",
@@ -141,7 +152,8 @@
           "shape": "bottle",
           "color": "#caab59",
           "slot": 12,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "alp_farm_ziegenmilch",
@@ -151,7 +163,8 @@
           "shape": "bottle",
           "color": "#6e88a3",
           "slot": 13,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "loop_schoko_milch",
@@ -161,7 +174,8 @@
           "shape": "bottle",
           "color": "#895236",
           "slot": 14,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "loop_erdbeer_milch",
@@ -171,7 +185,8 @@
           "shape": "bottle",
           "color": "#d46d8b",
           "slot": 15,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "amigos_bananen_milch",
@@ -181,7 +196,8 @@
           "shape": "bottle",
           "color": "#dfc864",
           "slot": 16,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "amigos_vanille_milch",
@@ -191,7 +207,8 @@
           "shape": "bottle",
           "color": "#c7b778",
           "slot": 17,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "alp_farm_buttermilch",
@@ -201,7 +218,8 @@
           "shape": "bottle",
           "color": "#7ab4a9",
           "slot": 18,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "alp_farm_kefir_nature",
@@ -211,7 +229,8 @@
           "shape": "bottle",
           "color": "#74ad93",
           "slot": 19,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "amigos_vollrahm_35",
@@ -221,7 +240,8 @@
           "shape": "carton",
           "color": "#397bb4",
           "slot": 20,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         }
       ]
     },
@@ -237,7 +257,8 @@
           "shape": "cup",
           "color": "#d2c8b3",
           "slot": 1,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "loop_joghurt_erdbeer",
@@ -247,7 +268,8 @@
           "shape": "cup",
           "color": "#d45d75",
           "slot": 2,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "loop_joghurt_heidelbeer",
@@ -257,7 +279,8 @@
           "shape": "cup",
           "color": "#6974ac",
           "slot": 3,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "loop_joghurt_himbeer",
@@ -267,7 +290,8 @@
           "shape": "cup",
           "color": "#c3537f",
           "slot": 4,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "loop_joghurt_pfirsich",
@@ -277,7 +301,8 @@
           "shape": "cup",
           "color": "#e7aa6a",
           "slot": 5,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "loop_joghurt_aprikose",
@@ -287,7 +312,8 @@
           "shape": "cup",
           "color": "#e6a047",
           "slot": 6,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_joghurt_vanille",
@@ -297,7 +323,8 @@
           "shape": "cup",
           "color": "#d9c68a",
           "slot": 7,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_joghurt_kirsche",
@@ -307,7 +334,8 @@
           "shape": "cup",
           "color": "#ae485d",
           "slot": 8,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_joghurt_mango",
@@ -317,7 +345,8 @@
           "shape": "cup",
           "color": "#efa248",
           "slot": 9,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_joghurt_zitrone",
@@ -327,7 +356,8 @@
           "shape": "cup",
           "color": "#d8c96c",
           "slot": 10,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_joghurt_kokos",
@@ -337,7 +367,8 @@
           "shape": "cup",
           "color": "#b0c8b6",
           "slot": 11,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_joghurt_mocca",
@@ -347,7 +378,8 @@
           "shape": "cup",
           "color": "#805d50",
           "slot": 12,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_greek_nature",
@@ -357,7 +389,8 @@
           "shape": "cup",
           "color": "#4f8eb3",
           "slot": 13,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_greek_honig",
@@ -367,7 +400,8 @@
           "shape": "cup",
           "color": "#d9ac5a",
           "slot": 14,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_skyr_vanille",
@@ -377,7 +411,8 @@
           "shape": "cup",
           "color": "#77b4bd",
           "slot": 15,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_skyr_beeren",
@@ -387,7 +422,8 @@
           "shape": "cup",
           "color": "#ad6c9f",
           "slot": 16,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_bio_bircher",
@@ -397,7 +433,8 @@
           "shape": "cup",
           "color": "#91a569",
           "slot": 17,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "sparfix_joghurt_schokolade",
@@ -407,7 +444,8 @@
           "shape": "cup",
           "color": "#8b563e",
           "slot": 18,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "loop_joghurtdrink_mango",
@@ -417,7 +455,8 @@
           "shape": "bottle",
           "color": "#e9a94e",
           "slot": 19,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         },
         {
           "id": "amigos_joghurtdrink_erdbeer",
@@ -427,7 +466,8 @@
           "shape": "bottle",
           "color": "#c54c70",
           "slot": 20,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 9
         }
       ]
     },
@@ -443,7 +483,8 @@
           "shape": "wedge",
           "color": "#e8c56d",
           "slot": 1,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 8
         },
         {
           "id": "alp_farm_gruyere_aop",
@@ -453,7 +494,8 @@
           "shape": "wedge",
           "color": "#d3a951",
           "slot": 2,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 8
         },
         {
           "id": "alp_farm_appenzeller",
@@ -463,7 +505,8 @@
           "shape": "wedge",
           "color": "#ce953f",
           "slot": 3,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 8
         },
         {
           "id": "alp_farm_tilsiter_mild",
@@ -473,7 +516,8 @@
           "shape": "wedge",
           "color": "#e5aa61",
           "slot": 4,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 8
         },
         {
           "id": "alp_farm_raclette_nature",
@@ -483,7 +527,8 @@
           "shape": "tray",
           "color": "#e5c87b",
           "slot": 5,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 10
         },
         {
           "id": "alp_farm_bergkaese_reif",
@@ -493,7 +538,8 @@
           "shape": "wedge",
           "color": "#bd9352",
           "slot": 6,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 8
         },
         {
           "id": "loop_kasescheiben_mild",
@@ -503,7 +549,8 @@
           "shape": "tray",
           "color": "#ddb45c",
           "slot": 7,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 10
         },
         {
           "id": "loop_kasescheiben_rezent",
@@ -513,7 +560,8 @@
           "shape": "tray",
           "color": "#e5ad4e",
           "slot": 8,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 10
         },
         {
           "id": "loop_reibkase_pizza",
@@ -523,7 +571,8 @@
           "shape": "pouch",
           "color": "#e8b94a",
           "slot": 9,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_reibkase_raclette",
@@ -533,7 +582,8 @@
           "shape": "pouch",
           "color": "#e1b55d",
           "slot": 10,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_mozzarella_kugel",
@@ -543,7 +593,8 @@
           "shape": "tub",
           "color": "#73a1af",
           "slot": 11,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_mozzarella_scheiben",
@@ -553,7 +604,8 @@
           "shape": "tray",
           "color": "#78b6c3",
           "slot": 12,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 10
         },
         {
           "id": "alp_farm_burrata_frisch",
@@ -563,7 +615,8 @@
           "shape": "tub",
           "color": "#90b1a9",
           "slot": 13,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_feta_wurfel",
@@ -573,7 +626,8 @@
           "shape": "tub",
           "color": "#789fc9",
           "slot": 14,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "alp_farm_ziegenkase_rolle",
@@ -583,7 +637,8 @@
           "shape": "tray",
           "color": "#e2d5ab",
           "slot": 15,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 10
         },
         {
           "id": "alp_farm_brie_de_suisse",
@@ -593,7 +648,8 @@
           "shape": "round",
           "color": "#ede1bd",
           "slot": 16,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 8
         },
         {
           "id": "alp_farm_camembert",
@@ -603,7 +659,8 @@
           "shape": "round",
           "color": "#c9af87",
           "slot": 17,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 8
         },
         {
           "id": "loop_frischkase_nature",
@@ -613,7 +670,8 @@
           "shape": "tub",
           "color": "#a2c6bb",
           "slot": 18,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_frischkase_krauter",
@@ -623,7 +681,8 @@
           "shape": "tub",
           "color": "#7ba57e",
           "slot": 19,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "sparfix_huttenkase",
@@ -633,7 +692,8 @@
           "shape": "tub",
           "color": "#9cb7b2",
           "slot": 20,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         }
       ]
     },
@@ -649,7 +709,8 @@
           "shape": "brick",
           "color": "#ead18b",
           "slot": 1,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_butter_gesalzen",
@@ -659,7 +720,8 @@
           "shape": "brick",
           "color": "#e5bc6d",
           "slot": 2,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "alp_farm_bio_butter",
@@ -669,7 +731,8 @@
           "shape": "brick",
           "color": "#ded095",
           "slot": 3,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "alp_farm_sauerrahmbutter",
@@ -679,7 +742,8 @@
           "shape": "brick",
           "color": "#bfbe89",
           "slot": 4,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_kochbutter",
@@ -689,7 +753,8 @@
           "shape": "brick",
           "color": "#d2aa61",
           "slot": 5,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "sparfix_butter_portion",
@@ -699,7 +764,8 @@
           "shape": "brick",
           "color": "#e8c87e",
           "slot": 6,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_krauterbutter",
@@ -709,7 +775,8 @@
           "shape": "brick",
           "color": "#8aaf63",
           "slot": 7,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_knoblauchbutter",
@@ -719,7 +786,8 @@
           "shape": "brick",
           "color": "#b8bf83",
           "slot": 8,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_laktosefreie_butter",
@@ -729,7 +797,8 @@
           "shape": "brick",
           "color": "#9ebca4",
           "slot": 9,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "sparfix_sonnenblumen_margarine",
@@ -739,7 +808,8 @@
           "shape": "tub",
           "color": "#e7be53",
           "slot": 10,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "sparfix_oliven_streichfett",
@@ -749,7 +819,8 @@
           "shape": "tub",
           "color": "#9cba68",
           "slot": 11,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_creme_fraiche",
@@ -759,7 +830,8 @@
           "shape": "tub",
           "color": "#a2bcd2",
           "slot": 12,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_saurer_halbrahm",
@@ -769,7 +841,8 @@
           "shape": "cup",
           "color": "#85b5be",
           "slot": 13,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_mascarpone",
@@ -779,7 +852,8 @@
           "shape": "tub",
           "color": "#ddcaa6",
           "slot": 14,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "alp_farm_doppelrahm",
@@ -789,7 +863,8 @@
           "shape": "tub",
           "color": "#b2bdcc",
           "slot": 15,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_schlagrahm_spray",
@@ -799,7 +874,8 @@
           "shape": "spray",
           "color": "#7ba1bd",
           "slot": 16,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 6
         },
         {
           "id": "loop_kaffeerahm_portionen",
@@ -809,7 +885,8 @@
           "shape": "tray",
           "color": "#b5a089",
           "slot": 17,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 10
         },
         {
           "id": "loop_kondensmilch",
@@ -819,7 +896,8 @@
           "shape": "can",
           "color": "#d6b27a",
           "slot": 18,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_kochrahm",
@@ -829,7 +907,8 @@
           "shape": "carton",
           "color": "#6e9cc5",
           "slot": 19,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_halbrahm_25",
@@ -839,7 +918,8 @@
           "shape": "carton",
           "color": "#a7bccb",
           "slot": 20,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         }
       ]
     },
@@ -855,7 +935,8 @@
           "shape": "tub",
           "color": "#8dbbb8",
           "slot": 1,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_rahmquark_nature",
@@ -865,7 +946,8 @@
           "shape": "tub",
           "color": "#74a0b3",
           "slot": 2,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_quark_erdbeer",
@@ -875,7 +957,8 @@
           "shape": "cup",
           "color": "#d77789",
           "slot": 3,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_quark_heidelbeer",
@@ -885,7 +968,8 @@
           "shape": "cup",
           "color": "#7a78b2",
           "slot": 4,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_quark_vanille",
@@ -895,7 +979,8 @@
           "shape": "cup",
           "color": "#d6c488",
           "slot": 5,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_quark_limette",
@@ -905,7 +990,8 @@
           "shape": "cup",
           "color": "#a6c86d",
           "slot": 6,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_protein_quark_nature",
@@ -915,7 +1001,8 @@
           "shape": "tub",
           "color": "#6095ad",
           "slot": 7,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "alp_farm_protein_quark_schoko",
@@ -925,7 +1012,8 @@
           "shape": "tub",
           "color": "#866354",
           "slot": 8,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "loop_milchreis_vanille",
@@ -935,7 +1023,8 @@
           "shape": "cup",
           "color": "#dfc892",
           "slot": 9,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "loop_milchreis_zimt",
@@ -945,7 +1034,8 @@
           "shape": "cup",
           "color": "#caa77a",
           "slot": 10,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "loop_griesspudding",
@@ -955,7 +1045,8 @@
           "shape": "cup",
           "color": "#d8c08d",
           "slot": 11,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_pudding_schokolade",
@@ -965,7 +1056,8 @@
           "shape": "cup",
           "color": "#8e5245",
           "slot": 12,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_pudding_vanille",
@@ -975,7 +1067,8 @@
           "shape": "cup",
           "color": "#e1c67a",
           "slot": 13,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "amigos_caramel_flan",
@@ -985,7 +1078,8 @@
           "shape": "cup",
           "color": "#c8834d",
           "slot": 14,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_mousse_schokolade",
@@ -995,7 +1089,8 @@
           "shape": "cup",
           "color": "#744b45",
           "slot": 15,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_mousse_erdbeer",
@@ -1005,7 +1100,8 @@
           "shape": "cup",
           "color": "#c4657e",
           "slot": 16,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_tiramisu_dessert",
@@ -1015,7 +1111,8 @@
           "shape": "cup",
           "color": "#a68165",
           "slot": 17,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "alp_farm_panna_cotta",
@@ -1025,7 +1122,8 @@
           "shape": "cup",
           "color": "#d6c4b0",
           "slot": 18,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         },
         {
           "id": "sparfix_blanc_battu",
@@ -1035,7 +1133,8 @@
           "shape": "tub",
           "color": "#bed0c8",
           "slot": 19,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 12
         },
         {
           "id": "amigos_quark_zitrone",
@@ -1045,9 +1144,11 @@
           "shape": "cup",
           "color": "#d9ca6e",
           "slot": 20,
-          "original_fictional_artwork": true
+          "original_fictional_artwork": true,
+          "stock_units_per_glb": 16
         }
       ]
     }
-  ]
+  ],
+  "physical_units_per_model": "5–20 identical retail packages of that product, in an organized shelf-ready cluster"
 }
