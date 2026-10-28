@@ -1,0 +1,32 @@
+name: QA supermarket shelf preview contact sheet
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/qa_store_shelf_previews.py"
+      - ".github/workflows/qa-store-shelf-previews.yml"
+permissions:
+  contents: write
+jobs:
+  QA-shelf:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Pillow and run image contact sheet review
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y python3-pil fonts-dejavu-core
+          /usr/bin/python3 tools/qa_store_shelf_previews.py
+          test -s previews/shelving/Shelf_QA_Contact.jpg
+          rm -f source/shelving/*.blend1
+      - name: Commit QA sheet and discard Blender automatic backup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A previews/shelving/Shelf_QA_Contact.jpg source/shelving/
+          if ! git diff --cached --quiet; then
+            git commit -m "Add shelf QA image and remove redundant Blender auto-backup"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
