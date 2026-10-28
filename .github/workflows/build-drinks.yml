@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "tools/build_drinks.py"
+      - "tools/generate_drink_labels.py"
       - ".github/workflows/build-drinks.yml"
 permissions:
   contents: write
@@ -19,19 +20,27 @@ jobs:
       - name: Install Blender
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y blender python3-numpy
-      - name: Generate and validate all twelve drink models
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-lato
+      - name: Generate 12 original 2K curved-print texture maps
+        run: |
+          /usr/bin/python3 tools/generate_drink_labels.py
+          test "$(find textures/drinks -name '*_wrap_2K.png' | wc -l)" -eq 12
+      - name: Rebuild and validate all twelve properly labelled drinks
         run: |
           blender -b -t 2 --python tools/build_drinks.py
           test "$(find assets/drinks -maxdepth 1 -name '*.glb' | wc -l)" -eq 12
           ls -lh assets/drinks/
+      - name: Render VOLTIX and representative cans and PET for label curvature QA
+        run: |
+          RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_drinks.py
+          test "$(find previews/drinks -name '*Curved_Labels.png' | wc -l)" -eq 4
       - name: Commit drink assets
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A assets/drinks/
+          git add -A assets/drinks/ textures/drinks/ previews/drinks/
           if ! git diff --cached --quiet; then
-            git commit -m "Add twelve original Swiss grocery drink GLBs"
+            git commit -m "Fix all 12 beverage label meshes with original curved 2K UV print artwork"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
