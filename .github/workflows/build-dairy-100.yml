@@ -6,6 +6,7 @@ on:
       - "catalog/dairy_100.json"
       - "tools/generate_dairy_artwork.py"
       - "tools/build_dairy_100.py"
+      - "tools/generate_surface_finish_maps.py"
       - ".github/workflows/build-dairy-100.yml"
 permissions:
   contents: write
@@ -24,6 +25,7 @@ jobs:
           sudo apt-get install -y blender python3-numpy python3-pil fonts-lato libegl1 libgl1-mesa-dri
       - name: Generate 100 unique dairy SKU label images
         run: |
+          /usr/bin/python3 tools/generate_surface_finish_maps.py
           /usr/bin/python3 tools/generate_dairy_artwork.py
           test "$(find textures/dairy_100 -maxdepth 1 -name '*.jpg' | wc -l)" -eq 100
           test "$(find previews/dairy_100 -maxdepth 1 -name '*All_20.jpg' | wc -l)" -eq 5
@@ -73,9 +75,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A assets/dairy_100/ textures/dairy_100/ previews/dairy_100/
+          git add -A assets/dairy_100/ textures/dairy_100/ previews/dairy_100/ textures/surface_finishes/
           if ! git diff --cached --quiet; then
-            git commit -m "Rebuild 100 dairy GLBs into 5–20 unit same-SKU shelf-stock models"
+            git commit -m "Add physically distinct material gloss to 100 dairy stock batch GLBs"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
