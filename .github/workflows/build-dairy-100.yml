@@ -78,6 +78,14 @@ jobs:
           git add -A assets/dairy_100/ textures/dairy_100/ previews/dairy_100/ textures/surface_finishes/
           if ! git diff --cached --quiet; then
             git commit -m "Add physically distinct material gloss to 100 dairy stock batch GLBs"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            for attempt in 1 2 3 4 5 6 7 8; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then
+                echo "Pushed all 100 dairy SKU stock batches on attempt $attempt"
+                exit 0
+              fi
+              sleep 4
+            done
+            echo "Remote advanced during dairy batch push" >&2
+            exit 1
           fi
