@@ -1,0 +1,89 @@
+{
+  "collection": "Swiss Noodle Cups · fictional in-game supermarkets",
+  "all_fictional": true,
+  "count_closed": 8,
+  "count_hero_open": 1,
+  "units": "meters",
+  "products": [
+    {
+      "id": "LOOP_Chicken_Instant_Noodles",
+      "brand": "LOOP",
+      "flavor": "CHICKEN",
+      "subtitle": "Poulet / Huhn",
+      "color": "#e7ba38",
+      "accent": "#155f6e",
+      "size": 65,
+      "family": "loop"
+    },
+    {
+      "id": "LOOP_Beef_Instant_Noodles",
+      "brand": "LOOP",
+      "flavor": "BEEF",
+      "subtitle": "Rind / Boeuf",
+      "color": "#bb452d",
+      "accent": "#185569",
+      "size": 65,
+      "family": "loop"
+    },
+    {
+      "id": "LOOP_Curry_Instant_Noodles",
+      "brand": "LOOP",
+      "flavor": "CURRY",
+      "subtitle": "Curry / Gewuerzt",
+      "color": "#d48419",
+      "accent": "#18576d",
+      "size": 65,
+      "family": "loop"
+    },
+    {
+      "id": "AMIGOS_Spicy_Chicken_Noodles",
+      "brand": "AMIGOS",
+      "flavor": "SPICY CHICKEN",
+      "subtitle": "Scharfes Poulet",
+      "color": "#dc412f",
+      "accent": "#54252c",
+      "size": 70,
+      "family": "amigos"
+    },
+    {
+      "id": "AMIGOS_Vegetable_Noodles",
+      "brand": "AMIGOS",
+      "flavor": "VEGETABLE",
+      "subtitle": "Gemuese / Legumes",
+      "color": "#50985b",
+      "accent": "#244f36",
+      "size": 70,
+      "family": "amigos"
+    },
+    {
+      "id": "AMIGOS_Hot_Curry_Noodles",
+      "brand": "AMIGOS",
+      "flavor": "HOT CURRY",
+      "subtitle": "Scharfer Curry",
+      "color": "#bf4727",
+      "accent": "#533524",
+      "size": 70,
+      "family": "amigos"
+    },
+    {
+      "id": "SparFix_Budget_Noodles",
+      "brand": "SPARFIX",
+      "flavor": "ORIGINAL",
+      "subtitle": "Guenstiger Nudelbecher",
+      "color": "#e6bc55",
+      "accent": "#326db1",
+      "size": 65,
+      "family": "budget"
+    },
+    {
+      "id": "ALP_Ramen_Extra_Hot",
+      "brand": "ALP RAMEN",
+      "flavor": "FIRE & CHILI",
+      "subtitle": "Extra Hot / Intense",
+      "color": "#2a252c",
+      "accent": "#df4431",
+      "size": 85,
+      "family": "premium"
+    }
+  ]
+}
