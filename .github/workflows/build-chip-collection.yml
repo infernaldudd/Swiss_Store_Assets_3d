@@ -55,6 +55,16 @@ jobs:
           git add -A assets/chips/ textures/chips/ textures/surface_finishes/
           if ! git diff --cached --quiet; then
             git commit -m "Add physically variable glossy laminate foil finish to 88 chips packages"
-            git pull --rebase -X theirs origin main
-            git push origin HEAD:main
+            # QA render is regenerated but intentionally not part of the
+            # material-only commit. Discard unstaged binary preview edits.
+            git restore --worktree previews/chips/
+            for attempt in 1 2 3 4 5 6; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then
+                echo "Published glossy chip bags on attempt $attempt"
+                exit 0
+              fi
+              sleep 3
+            done
+            exit 1
           fi
