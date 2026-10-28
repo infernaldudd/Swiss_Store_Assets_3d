@@ -256,7 +256,17 @@ def peeled_lid(rt,h,mats):
     fs=[list(reversed(f)) for f in faces]
     uv2=[list(reversed(v)) for v in uv]
     add_mesh("Aluminium underside of lifted lid",lo,fs,mats["foil"],uv2)
-    pull_tab(rt,h+.052,mats["foil"])
+    # A separate overhanging tip rises continuously from the lifted foil's
+    # high back edge, instead of hovering over the opposite side of the cup.
+    y0=rt-.001
+    z0=h+.002+.032*(y0/rt)**1.55+.006
+    v=[(-.012,y0,z0),(.012,y0,z0),
+       (-.011,y0+.014,z0+.009),(.011,y0+.014,z0+.009),
+       (-.008,y0+.025,z0+.011),(.008,y0+.025,z0+.011)]
+    add_mesh("Attached upward lifted foil pull tab",
+             v,[[0,1,3,2],[2,3,5,4]],mats["foil"],
+             [[(.35,.33),(.65,.33),(.65,.19),(.35,.19)],
+              [(.35,.19),(.65,.19),(.61,.08),(.39,.08)]])
 
 def soup_surface(rt,z,mats):
     # 3D dish surface beneath noodles, using a shallow warped disk rather than
