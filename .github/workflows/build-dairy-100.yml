@@ -1,4 +1,4 @@
-name: Build 100 separate dairy GLBs in five folders
+name: Build 100 dairy SKU GLBs, each containing 5-20 retail units
 on:
   workflow_dispatch:
   push:
@@ -27,32 +27,53 @@ jobs:
           /usr/bin/python3 tools/generate_dairy_artwork.py
           test "$(find textures/dairy_100 -maxdepth 1 -name '*.jpg' | wc -l)" -eq 100
           test "$(find previews/dairy_100 -maxdepth 1 -name '*All_20.jpg' | wc -l)" -eq 5
-      - name: Build and structurally validate 5 grouped GLB scenes with 20 distinct SKUs apiece
+      - name: Build 100 independent stock-batch GLBs (5-20 matching products in each)
         run: |
           blender -b -t 2 --python tools/build_dairy_100.py
           test "$(find assets/dairy_100 -mindepth 2 -name '*.glb' | wc -l)" -eq 100
-          ls -lh assets/dairy_100/
-      - name: Validate exactly 100 unique products and non-repeating labels
+          du -sh assets/dairy_100/\n          # Remove obsolete mixed-SKU grouped scenes; keep only one-SKU stock-batch GLBs.\n          rm -f assets/dairy_100/Batch_*_20_Distinct_Products.glb
+      - name: Validate 100 distinct SKU GLBs, real 5-20 unit meshes per file, and unique labels
         run: |
           /usr/bin/python3 - <<'PY'
-          import json,glob,hashlib,os
+          import json,glob,hashlib,os,struct
           d=json.load(open("catalog/dairy_100.json"))
-          a=[p for b in d["batches"] for p in b["products"]]
-          assert len(a)==100 and len({x["id"] for x in a})==100
-          assert len(glob.glob("assets/dairy_100/Batch_*/*.glb"))==100
-          fingerprints=[hashlib.sha256(open("textures/dairy_100/"+p["id"]+".jpg","rb").read()).hexdigest() for p in a]
-          assert len(set(fingerprints))==100,"Some labels are duplicates"
-          for b in d["batches"]:
-              assert len(b["products"])==20
-          print("SUCCESS: 100 original products, 100 different artworks, five directories with 20 individual GLBs each")
+          all_products=[p for b in d["batches"] for p in b["products"]]
+          assert len(all_products)==100 and len({p["id"] for p in all_products})==100
+          files=glob.glob("assets/dairy_100/Batch_*/*.glb")
+          assert len(files)==100,(len(files),"100 products means exactly 100 GLBs")
+          fingerprints=[]
+          physical_units=0
+          for batch in d["batches"]:
+              assert len(batch["products"])==20
+              for p in batch["products"]:
+                  img="textures/dairy_100/"+p["id"]+".jpg"
+                  fingerprints.append(hashlib.sha256(open(img,"rb").read()).hexdigest())
+                  glb="assets/dairy_100/Batch_%02d_%s/%s.glb"%(batch["batch_number"],batch["name"],p["id"])
+                  with open(glb,"rb") as f:
+                      magic,version,length=struct.unpack("<4sII",f.read(12))
+                      json_size,chunk_type=struct.unpack("<I4s",f.read(8))
+                      info=json.loads(f.read(json_size))
+                  assert magic==b"glTF" and version==2 and chunk_type==b"JSON"
+                  assert length==os.path.getsize(glb)
+                  units=[node for node in info["nodes"] if node.get("name","").startswith("STOCK_UNIT_")]
+                  expected=p["stock_units_per_glb"]
+                  assert 5<=expected<=20
+                  assert len(units)==expected,(p["id"],len(units),expected)
+                  assert all(p["id"] in n["name"] and len(n.get("children",[]))>=2 for n in units)
+                  assert len(info.get("meshes",[]))>=2
+                  assert len(info.get("images",[]))>=1
+                  physical_units+=len(units)
+          assert len(set(fingerprints))==100,"A repeated artwork texture was found"
+          print("SUCCESS: 100 distinct products, 100 GLBs,",
+                physical_units,"real shelf-stock unit objects, 100 different labels")
           PY
-      - name: Commit five 3D scene files, 100 textures and gallery sheets
+      - name: Commit 100 stock-batch GLBs, 100 label textures and five gallery sheets
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A assets/dairy_100/ textures/dairy_100/ previews/dairy_100/
           if ! git diff --cached --quiet; then
-            git commit -m "Add 100 unique dairy products as five separately organized GLB scenes"
+            git commit -m "Rebuild 100 dairy GLBs into 5–20 unit same-SKU shelf-stock models"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
