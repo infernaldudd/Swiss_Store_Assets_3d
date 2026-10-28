@@ -219,16 +219,19 @@ def aim(obj, target):
 
 def preview(name, width, height):
     # A backdrop and lights exist only for PNG previews, NOT in exported GLB.
-    wall = mat('preview only | finely textured limestone',
-               (0.30, 0.32, 0.33), 0.0, 0.92)
-    cube('PREVIEW ONLY - facade wall', (0, 0.32, 0), (width+1.35, 0.20, height+0.95),
-         wall, 0.02, export=False)
+    # For the double-A sign render an isolated transparent background, not
+    # a fake dark store wall that resembles an actual backing panel.
+    if name != 'AMIGOS_DoubleA_Projected':
+        wall = mat('preview only | finely textured limestone',
+                   (0.30, 0.32, 0.33), 0.0, 0.92)
+        cube('PREVIEW ONLY - facade wall', (0, 0.32, 0),
+             (width+1.35, 0.20, height+0.95), wall, 0.02, export=False)
     bpy.ops.object.camera_add(location=(width*0.12, -max(width*1.72, 5.35), height*0.12+0.30))
     cam = bpy.context.object
     cam.name = 'PREVIEW ONLY - camera'
     aim(cam, (0,0,0))
     cam.data.type='ORTHO'
-    cam.data.ortho_scale=max(width+1.25, (height+1.00)*2.05)
+    cam.data.ortho_scale=(height+0.35)*1.95 if name=='AMIGOS_DoubleA_Projected' else max(width+1.25, (height+1.00)*2.05)
     bpy.context.scene.camera=cam
     for loc, power, size in [((-width*.5,-3,3),750,4.0),
                               ((width*.6,-1,0.5),380,2.4)]:
@@ -247,7 +250,7 @@ def preview(name, width, height):
     scene.render.image_settings.file_format='PNG'
     scene.render.filepath=os.path.join(PREV,name+'.png')
     scene.world.color=(0.10,0.10,0.10)
-    scene.render.film_transparent=False
+    scene.render.film_transparent=(name=='AMIGOS_DoubleA_Projected')
     if hasattr(scene, 'eevee') and hasattr(scene.eevee, 'taa_render_samples'):
         scene.eevee.taa_render_samples=32
     # Fog-glow bloom only affects preview; emissive PBR faces remain in the GLB.
@@ -303,7 +306,7 @@ def main():
         reset()
         width,height=builder()
         export_asset(name)
-        if os.environ.get('RENDER_PREVIEWS') == '1':
+        if os.environ.get('RENDER_PREVIEWS') == '1' and (not os.environ.get('PREVIEW_TARGET') or name==os.environ.get('PREVIEW_TARGET')):
             preview(name,width,height)
     print('COMPLETE: 4 GLBs in',OUT)
 
