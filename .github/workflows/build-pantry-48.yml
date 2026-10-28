@@ -1,0 +1,94 @@
+name: Add 48 original Swiss supermarket pantry products
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "catalog/pantry_48.json"
+      - "tools/generate_pantry_48_art.py"
+      - "tools/build_pantry_48.py"
+      - "tools/render_pantry_48_sample.py"
+      - ".github/workflows/build-pantry-48.yml"
+permissions:
+  contents: write
+concurrency:
+  group: swiss-pantry-48-unique-products
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Blender/Python image/PBR libraries
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-pil python3-numpy fonts-lato fonts-dejavu-core libegl1 libgl1-mesa-dri
+      - name: Generate 48 unique original 2K package artwork labels and 8 sheets
+        run: |
+          /usr/bin/python3 tools/generate_pantry_48_art.py
+          test "$(find textures/pantry_48 -maxdepth 1 -name '*_2K.jpg' | wc -l)" -eq 48
+          test "$(find previews/pantry_48 -maxdepth 1 -name '*Six_Different_SKUs.jpg' | wc -l)" -eq 8
+      - name: Export and structurally check 48 genuine SKU GLBs with 6-12 physical units each
+        run: |
+          blender -b -t 2 --python tools/build_pantry_48.py
+          test "$(find assets/pantry_48 -name '*.glb' | wc -l)" -eq 48
+          du -sh assets/pantry_48 textures/pantry_48
+      - name: Blender Cycles visual QA of eight different physical packaging shapes
+        run: |
+          blender -b -t 2 --python tools/render_pantry_48_sample.py
+          test -s previews/pantry_48/Eight_Actual_Package_Shapes_3D.png
+      - name: Validate genuine GLBs, distinct originals, embedded print, unit hierarchy
+        run: |
+          /usr/bin/python3 - <<'PY'
+          import glob,json,hashlib,os,struct
+          from PIL import Image
+          catalog=json.load(open("catalog/pantry_48.json"))
+          products=[(g,p) for g in catalog["categories"] for p in g["products"]]
+          assert len(catalog["categories"])==8 and len(products)==48
+          assert len({p["id"] for g,p in products})==48
+          files=glob.glob("assets/pantry_48/*/*.glb")
+          assert len(files)==48
+          hashes=[]
+          totalunits=0
+          for group,p in products:
+              art="textures/pantry_48/"+p["id"]+"_2K.jpg"
+              image=Image.open(art)
+              assert image.size==(2048,1024),(art,image.size)
+              hashes.append(hashlib.sha256(open(art,"rb").read()).hexdigest())
+              path="assets/pantry_48/"+group["folder"]+"/"+p["id"]+".glb"
+              with open(path,"rb") as stream:
+                  magic,version,filesize=struct.unpack("<4sII",stream.read(12))
+                  n,typ=struct.unpack("<I4s",stream.read(8))
+                  model=json.loads(stream.read(n))
+              assert magic==b"glTF" and version==2 and filesize==os.path.getsize(path)
+              assert len(model["images"])>=2
+              assert len(model["materials"])>=2
+              units=[n for n in model["nodes"] if n.get("name","").startswith("RETAIL_UNIT_")]
+              assert len(units)==p["units_per_glb"],(p["id"],len(units),p["units_per_glb"])
+              assert all(p["id"] in n["name"] for n in units)
+              assert all(len(n.get("children",[]))>=2 for n in units)
+              assert any("TEXCOORD_0" in primitive.get("attributes",{})
+                         for m in model["meshes"] for primitive in m.get("primitives",[]))
+              totalunits+=len(units)
+          assert len(set(hashes))==48,"Duplicate artwork found"
+          assert totalunits==411,totalunits
+          print("PASSED: 48 unique products, 48 individual GLBs, 411 actual stock objects,"
+                " 48 distinct original 2048x1024 ink designs, 8 review sheets, 8 shape render.")
+          PY
+      - name: Commit 48 GLBs, 48 PBR artworks and the real 3D preview
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/pantry_48/ textures/pantry_48/ previews/pantry_48/
+          if ! git diff --cached --quiet; then
+            git commit -m "Add 48 original pantry grocery stock-batch GLBs and 2K original artwork"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then
+                echo "Uploaded all 48 grocery GLBs"
+                exit 0
+              fi
+              sleep 3
+            done
+            exit 1
+          fi
