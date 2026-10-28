@@ -43,6 +43,15 @@ jobs:
           git add -A assets/drinks/ textures/drinks/ previews/drinks/ textures/surface_finishes/
           if ! git diff --cached --quiet; then
             git commit -m "Fix all 12 beverage label meshes with original curved 2K UV print artwork"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then
+                echo "Uploaded drink assets after attempt $attempt"
+                exit 0
+              fi
+              echo "Concurrent repository push; retrying..."
+              sleep 3
+            done
+            echo "Could not safely push drink models" >&2
+            exit 1
           fi
