@@ -1,0 +1,31 @@
+name: QA compressed 3D pantry preview
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/qa_pantry_48_preview.py"
+      - ".github/workflows/qa-pantry-48-preview.yml"
+permissions:
+  contents: write
+jobs:
+  qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Pillow and compress the REAL Blender render
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y python3-pil
+          /usr/bin/python3 tools/qa_pantry_48_preview.py
+          test -s previews/pantry_48/Eight_Actual_Package_Shapes_3D_QA.jpg
+      - name: Commit reviewable 3D gallery image
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add previews/pantry_48/Eight_Actual_Package_Shapes_3D_QA.jpg
+          if ! git diff --cached --quiet; then
+            git commit -m "Add compact real 3D shelf product preview for image QA"
+            git pull --rebase -X theirs origin main
+            git push origin HEAD:main
+          fi
