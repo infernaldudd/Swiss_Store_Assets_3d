@@ -125,6 +125,12 @@ def printed_box(name,w,d,h,ink,side,flap,bevel=.002):
       [(.28,.85),(.72,.85),(.72,.97),(.28,.97)],
       [(.28,.03),(.72,.03),(.72,.13),(.28,.13)]]
  ob=mesh(name+" | original 2K full six-face print",v,fs,ink,uvs)
+ # The top and underside are folded paperboard, NOT the top band of the
+ # printed brand graphic. Otherwise the atlas black header creates an
+ # unrealistic black stripe on the carton roof.
+ ob.data.materials.append(flap)
+ for face_idx in (4,5):
+  ob.data.polygons[face_idx].material_index=1
  cube(name+" | folded top heat-sealed tab",(0,0,h+.0015),
        (w-.004,d-.003,.004),flap,.0011)
  # Physically narrow crimp crease and taped opening edges.
@@ -286,7 +292,7 @@ def build(p):
       image=p["id"]+"_2K.jpg",finish=finish)
  M={
   "metal":material("PBR | stamped satin cap / foil metallic rim",(.59,.64,.66),.29,.78,finish="Brushed_Steel_Roughness"),
-  "foil":material("PBR | asymmetric laminated foil crimp",(.74,.71,.63),.27,.33,finish="Flex_Foil_Roughness"),
+  "foil":material("PBR | pale embossed laminated foil crimp",(.91,.89,.85),.41,.18,finish="SemiGloss_Vinyl_Roughness"),
   "paper":material("PBR | fibrous folded paper and carton edge",(.83,.82,.73),.73,.0,finish="Matte_Paper_Roughness"),
   "polymer":material("PBR | moulded food-pack closure",(.84,.84,.80),.23,.02,finish="SemiGloss_Vinyl_Roughness"),
   "glass":material("PBR | restrained food-grade glass highlights",(.79,.90,.91),.16,.0,alpha=.22)}
