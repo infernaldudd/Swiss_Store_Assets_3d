@@ -1,0 +1,478 @@
+{
+  "title": "48 distinct fictional Swiss supermarket pantry products",
+  "brands": "Original fictional game trademarks. Coop product categories are category references only.",
+  "categories": [
+    {
+      "folder": "01_Pasta",
+      "products": [
+        {
+          "id": "loop_spaghetti_500g",
+          "brand": "LOOP",
+          "name": "Spaghetti",
+          "weight": "500 g",
+          "form": "pasta_bag",
+          "palette": "wheat",
+          "units_per_glb": 8
+        },
+        {
+          "id": "loop_penne_500g",
+          "brand": "LOOP",
+          "name": "Penne Rigate",
+          "weight": "500 g",
+          "form": "pasta_bag",
+          "palette": "tomato",
+          "units_per_glb": 8
+        },
+        {
+          "id": "amigos_fusilli_500g",
+          "brand": "AMIGOS",
+          "name": "Fusilli",
+          "weight": "500 g",
+          "form": "pasta_bag",
+          "palette": "gold",
+          "units_per_glb": 8
+        },
+        {
+          "id": "amigos_farfalline_500g",
+          "brand": "AMIGOS",
+          "name": "Farfalline",
+          "weight": "500 g",
+          "form": "pasta_bag",
+          "palette": "mint",
+          "units_per_glb": 8
+        },
+        {
+          "id": "alpfarm_egg_noodles_350g",
+          "brand": "ALP FARM",
+          "name": "Eiernudeln",
+          "weight": "350 g",
+          "form": "pasta_bag",
+          "palette": "cream",
+          "units_per_glb": 8
+        },
+        {
+          "id": "sparfix_spaghetti_1kg",
+          "brand": "SPARFIX",
+          "name": "Spaghetti Familia",
+          "weight": "1 kg",
+          "form": "pasta_bag",
+          "palette": "red",
+          "units_per_glb": 8
+        }
+      ]
+    },
+    {
+      "folder": "02_Rice_Grains",
+      "products": [
+        {
+          "id": "loop_basmati_rice_1kg",
+          "brand": "LOOP",
+          "name": "Basmati Reis",
+          "weight": "1 kg",
+          "form": "rice_bag",
+          "palette": "teal",
+          "units_per_glb": 8
+        },
+        {
+          "id": "loop_risotto_rice_1kg",
+          "brand": "LOOP",
+          "name": "Risotto Arborio",
+          "weight": "1 kg",
+          "form": "rice_bag",
+          "palette": "cream",
+          "units_per_glb": 8
+        },
+        {
+          "id": "amigos_jasmine_rice_1kg",
+          "brand": "AMIGOS",
+          "name": "Jasmin Reis",
+          "weight": "1 kg",
+          "form": "rice_bag",
+          "palette": "yellow",
+          "units_per_glb": 8
+        },
+        {
+          "id": "alpfarm_bulgur_500g",
+          "brand": "ALP FARM",
+          "name": "Bulgur",
+          "weight": "500 g",
+          "form": "paper_box",
+          "palette": "sand",
+          "units_per_glb": 8
+        },
+        {
+          "id": "alpfarm_quinoa_500g",
+          "brand": "ALP FARM",
+          "name": "Quinoa Tricolore",
+          "weight": "500 g",
+          "form": "standup_pouch",
+          "palette": "rose",
+          "units_per_glb": 8
+        },
+        {
+          "id": "sparfix_rice_1kg",
+          "brand": "SPARFIX",
+          "name": "Langkorn Reis",
+          "weight": "1 kg",
+          "form": "rice_bag",
+          "palette": "blue",
+          "units_per_glb": 8
+        }
+      ]
+    },
+    {
+      "folder": "03_Breakfast",
+      "products": [
+        {
+          "id": "loop_cornflakes_500g",
+          "brand": "LOOP",
+          "name": "Cornflakes",
+          "weight": "500 g",
+          "form": "cereal_box",
+          "palette": "yellow",
+          "units_per_glb": 6
+        },
+        {
+          "id": "loop_choco_pops_375g",
+          "brand": "LOOP",
+          "name": "Choco Pops",
+          "weight": "375 g",
+          "form": "cereal_box",
+          "palette": "brown",
+          "units_per_glb": 6
+        },
+        {
+          "id": "amigos_honey_crunch_500g",
+          "brand": "AMIGOS",
+          "name": "Honey Crunch",
+          "weight": "500 g",
+          "form": "cereal_box",
+          "palette": "gold",
+          "units_per_glb": 6
+        },
+        {
+          "id": "alpfarm_bircher_muesli_500g",
+          "brand": "ALP FARM",
+          "name": "Bircher Muesli",
+          "weight": "500 g",
+          "form": "standup_pouch",
+          "palette": "cream",
+          "units_per_glb": 8
+        },
+        {
+          "id": "sparfix_oats_1kg",
+          "brand": "SPARFIX",
+          "name": "Haferflocken",
+          "weight": "1 kg",
+          "form": "paper_sack",
+          "palette": "blue",
+          "units_per_glb": 8
+        },
+        {
+          "id": "alpfarm_nut_granola_400g",
+          "brand": "ALP FARM",
+          "name": "Nuss Granola",
+          "weight": "400 g",
+          "form": "standup_pouch",
+          "palette": "sand",
+          "units_per_glb": 8
+        }
+      ]
+    },
+    {
+      "folder": "04_Coffee_Tea",
+      "products": [
+        {
+          "id": "loop_coffee_ground_500g",
+          "brand": "LOOP",
+          "name": "Kaffee gemahlen",
+          "weight": "500 g",
+          "form": "coffee_brick",
+          "palette": "brown",
+          "units_per_glb": 9
+        },
+        {
+          "id": "loop_espresso_beans_1kg",
+          "brand": "LOOP",
+          "name": "Espresso Bohnen",
+          "weight": "1 kg",
+          "form": "valve_pouch",
+          "palette": "black",
+          "units_per_glb": 8
+        },
+        {
+          "id": "amigos_coffee_250g",
+          "brand": "AMIGOS",
+          "name": "Café Classic",
+          "weight": "250 g",
+          "form": "coffee_brick",
+          "palette": "red",
+          "units_per_glb": 9
+        },
+        {
+          "id": "alpfarm_cappuccino_200g",
+          "brand": "ALP FARM",
+          "name": "Cappuccino",
+          "weight": "200 g",
+          "form": "coffee_tin",
+          "palette": "cream",
+          "units_per_glb": 9
+        },
+        {
+          "id": "loop_english_tea_20",
+          "brand": "LOOP",
+          "name": "English Breakfast",
+          "weight": "20 Beutel",
+          "form": "tea_box",
+          "palette": "teal",
+          "units_per_glb": 12
+        },
+        {
+          "id": "amigos_fruit_tea_20",
+          "brand": "AMIGOS",
+          "name": "Früchtetee",
+          "weight": "20 Beutel",
+          "form": "tea_box",
+          "palette": "rose",
+          "units_per_glb": 12
+        }
+      ]
+    },
+    {
+      "folder": "05_Sweets_Biscuits",
+      "products": [
+        {
+          "id": "alpsweet_milk_chocolate_100g",
+          "brand": "ALPSWEET",
+          "name": "Milch Schokolade",
+          "weight": "100 g",
+          "form": "choc_bar",
+          "palette": "brown",
+          "units_per_glb": 12
+        },
+        {
+          "id": "alpsweet_dark_chocolate_100g",
+          "brand": "ALPSWEET",
+          "name": "Dunkel 70%",
+          "weight": "100 g",
+          "form": "choc_bar",
+          "palette": "black",
+          "units_per_glb": 12
+        },
+        {
+          "id": "alpsweet_nut_chocolate_100g",
+          "brand": "ALPSWEET",
+          "name": "Haselnuss",
+          "weight": "100 g",
+          "form": "choc_bar",
+          "palette": "gold",
+          "units_per_glb": 12
+        },
+        {
+          "id": "amigos_butter_biscuits_200g",
+          "brand": "AMIGOS",
+          "name": "Butter Guetzli",
+          "weight": "200 g",
+          "form": "cookie_box",
+          "palette": "yellow",
+          "units_per_glb": 8
+        },
+        {
+          "id": "loop_oat_cookies_200g",
+          "brand": "LOOP",
+          "name": "Hafer Cookies",
+          "weight": "200 g",
+          "form": "flowpack",
+          "palette": "sand",
+          "units_per_glb": 9
+        },
+        {
+          "id": "alpsweet_choco_wafers_150g",
+          "brand": "ALPSWEET",
+          "name": "Schoko Waffeln",
+          "weight": "150 g",
+          "form": "flowpack",
+          "palette": "brown",
+          "units_per_glb": 9
+        }
+      ]
+    },
+    {
+      "folder": "06_Sauces_Spreads",
+      "products": [
+        {
+          "id": "loop_tomato_basil_400g",
+          "brand": "LOOP",
+          "name": "Tomate Basilikum",
+          "weight": "400 g",
+          "form": "glass_jar",
+          "palette": "tomato",
+          "units_per_glb": 8
+        },
+        {
+          "id": "loop_green_pesto_190g",
+          "brand": "LOOP",
+          "name": "Pesto Verde",
+          "weight": "190 g",
+          "form": "glass_jar",
+          "palette": "mint",
+          "units_per_glb": 8
+        },
+        {
+          "id": "amigos_arrabbiata_400g",
+          "brand": "AMIGOS",
+          "name": "Arrabbiata",
+          "weight": "400 g",
+          "form": "glass_jar",
+          "palette": "red",
+          "units_per_glb": 8
+        },
+        {
+          "id": "alpfarm_strawberry_jam_350g",
+          "brand": "ALP FARM",
+          "name": "Erdbeere Konfitüre",
+          "weight": "350 g",
+          "form": "glass_jar",
+          "palette": "rose",
+          "units_per_glb": 8
+        },
+        {
+          "id": "alpfarm_wildflower_honey_500g",
+          "brand": "ALP FARM",
+          "name": "Blütenhonig",
+          "weight": "500 g",
+          "form": "squeeze",
+          "palette": "gold",
+          "units_per_glb": 9
+        },
+        {
+          "id": "amigos_apricot_jam_350g",
+          "brand": "AMIGOS",
+          "name": "Aprikose Konfitüre",
+          "weight": "350 g",
+          "form": "glass_jar",
+          "palette": "orange",
+          "units_per_glb": 8
+        }
+      ]
+    },
+    {
+      "folder": "07_Baking",
+      "products": [
+        {
+          "id": "loop_white_flour_1kg",
+          "brand": "LOOP",
+          "name": "Weissmehl",
+          "weight": "1 kg",
+          "form": "paper_sack",
+          "palette": "cream",
+          "units_per_glb": 8
+        },
+        {
+          "id": "loop_white_sugar_1kg",
+          "brand": "LOOP",
+          "name": "Kristallzucker",
+          "weight": "1 kg",
+          "form": "paper_sack",
+          "palette": "teal",
+          "units_per_glb": 8
+        },
+        {
+          "id": "alpfarm_brown_sugar_500g",
+          "brand": "ALP FARM",
+          "name": "Rohrzucker",
+          "weight": "500 g",
+          "form": "paper_sack",
+          "palette": "sand",
+          "units_per_glb": 8
+        },
+        {
+          "id": "amigos_cocoa_250g",
+          "brand": "AMIGOS",
+          "name": "Kakaopulver",
+          "weight": "250 g",
+          "form": "coffee_tin",
+          "palette": "brown",
+          "units_per_glb": 9
+        },
+        {
+          "id": "loop_baking_powder_5x",
+          "brand": "LOOP",
+          "name": "Backpulver",
+          "weight": "5 x 16 g",
+          "form": "paper_box",
+          "palette": "blue",
+          "units_per_glb": 8
+        },
+        {
+          "id": "alpfarm_pancake_mix_400g",
+          "brand": "ALP FARM",
+          "name": "Pancake Mix",
+          "weight": "400 g",
+          "form": "paper_box",
+          "palette": "gold",
+          "units_per_glb": 8
+        }
+      ]
+    },
+    {
+      "folder": "08_Condiments",
+      "products": [
+        {
+          "id": "loop_olive_oil_500ml",
+          "brand": "LOOP",
+          "name": "Olivenöl",
+          "weight": "500 ml",
+          "form": "bottle",
+          "palette": "olive",
+          "units_per_glb": 9
+        },
+        {
+          "id": "loop_sunflower_oil_1l",
+          "brand": "LOOP",
+          "name": "Sonnenblumenöl",
+          "weight": "1 L",
+          "form": "bottle",
+          "palette": "yellow",
+          "units_per_glb": 9
+        },
+        {
+          "id": "amigos_balsamic_500ml",
+          "brand": "AMIGOS",
+          "name": "Aceto Balsamico",
+          "weight": "500 ml",
+          "form": "bottle",
+          "palette": "brown",
+          "units_per_glb": 9
+        },
+        {
+          "id": "amigos_mustard_200g",
+          "brand": "AMIGOS",
+          "name": "Senf Mild",
+          "weight": "200 g",
+          "form": "squeeze",
+          "palette": "gold",
+          "units_per_glb": 9
+        },
+        {
+          "id": "loop_mayonnaise_250g",
+          "brand": "LOOP",
+          "name": "Mayonnaise",
+          "weight": "250 g",
+          "form": "squeeze",
+          "palette": "cream",
+          "units_per_glb": 9
+        },
+        {
+          "id": "alpfarm_apple_vinegar_500ml",
+          "brand": "ALP FARM",
+          "name": "Apfelessig",
+          "weight": "500 ml",
+          "form": "bottle",
+          "palette": "mint",
+          "units_per_glb": 9
+        }
+      ]
+    }
+  ]
+}
