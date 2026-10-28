@@ -18,7 +18,7 @@ try:
  small=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",20)
 except OSError:
  title=small=ImageFont.load_default()
-d.text((40,17),"SWISS STORE · MODULAR SHELF 3D QA",font=title,fill=(30,40,41))
+d.text((40,17),"SWISS STORE · LOW-GLARE STEEL SHELF QA",font=title,fill=(30,40,41))
 for i,name in enumerate(names):
  path=os.path.join(folder,name+".png")
  pic=Image.open(path).convert("RGB")
