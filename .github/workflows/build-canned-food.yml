@@ -1,0 +1,55 @@
+name: Build 20 Swiss canned-food 3D assets
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "catalog/canned_food.json"
+      - "tools/generate_canned_food_labels.py"
+      - "tools/build_canned_food.py"
+      - "tools/make_canned_food_contact_sheets.py"
+      - ".github/workflows/build-canned-food.yml"
+permissions:
+  contents: write
+concurrency:
+  group: swiss-canned-food-2026
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Blender and original PBR image libraries
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender python3-numpy python3-pil fonts-lato libegl1 libgl1-mesa-dri
+      - name: Generate 18 original 2K wrap labels and steel detail maps
+        run: |
+          /usr/bin/python3 tools/generate_canned_food_labels.py
+          test "$(find textures/canned_food -name '*_wrap_2K.png' | wc -l)" -eq 18
+          test -s textures/canned_food/_Shared_Fine_Metal_Normal.png
+      - name: Export and validate 20 independent physically shaped GLB cans
+        run: |
+          blender -b -t 2 --python tools/build_canned_food.py
+          test "$(find assets/canned_food -name '*.glb' | wc -l)" -eq 20
+          test "$(find source/canned_food -name '*.blend' | wc -l)" -eq 2
+          du -sh assets/canned_food/ textures/canned_food/
+      - name: Generate four packaging contact sheets
+        run: |
+          /usr/bin/python3 tools/make_canned_food_contact_sheets.py
+          test "$(find previews/canned_food -name '*_Collection_Labels.jpg' | wc -l)" -eq 4
+      - name: Render five representative close-up prop previews
+        run: |
+          RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_canned_food.py
+          test "$(find previews/canned_food -name '*.png' | wc -l)" -eq 5
+      - name: Commit models, source Blender hero assets, 2K artwork and renders
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/canned_food/ textures/canned_food/ previews/canned_food/ source/canned_food/
+          if ! git diff --cached --quiet; then
+            git commit -m "Add 18 original canned foods and two opened hero tins"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
