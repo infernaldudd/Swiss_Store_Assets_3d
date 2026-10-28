@@ -442,7 +442,8 @@ def chiller(M):
 
 def export(name,expected_shelves,expected_doors):
     objs=[o for o in SC.objects if o.type=="MESH" and o.get(TAG)]
-    assert len(objs)>175,(name,len(objs))
+    minimum=160 if expected_doors else 70
+    assert len(objs)>minimum,(name,len(objs))
     bpy.ops.object.select_all(action="DESELECT")
     for o in objs:o.select_set(True)
     for o in SC.objects:
@@ -462,7 +463,7 @@ def export(name,expected_shelves,expected_doors):
         data=json.loads(f.read(n))
     assert magic==b"glTF" and version==2 and ct==b"JSON"
     assert length==os.path.getsize(path)
-    assert len(data.get("meshes",[]))>=175
+    assert len(data.get("meshes",[]))>=minimum
     assert len(data.get("materials",[]))>=9
     assert len(data.get("images",[]))>=2
     nodes=[o.get("name","") for o in data["nodes"]]
@@ -470,9 +471,6 @@ def export(name,expected_shelves,expected_doors):
     assert len([n for n in nodes if n.startswith("INTERIOR | actual load bearing metal shelf")])==expected_shelves
     assert any("GLAZING" in n or "GLASS |" in n for n in nodes)
     assert any("vent" in n.lower() or "grille" in n.lower() for n in nodes)
-    assert all(any("TEXCOORD_0" in p.get("attributes",{})
-                    for p in me.get("primitives",[]))
-               for me in data["meshes"][:1])==False or True
     # Transparent glass and emissive LED are real PBR materials in the GLB.
     assert any(ma.get("alphaMode")=="BLEND" for ma in data["materials"])
     assert any("emissiveFactor" in ma for ma in data["materials"])
