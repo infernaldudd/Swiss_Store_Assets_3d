@@ -334,11 +334,44 @@ def export_batch(batch):
        count,"3D pieces",len(metadata["meshes"]),"glTF meshes",
        len(metadata["images"]),"image textures",total,"bytes",flush=True)
  return path
+def export_individual(p,batch):
+ reset()
+ root,n=one_product(p,batch["batch_number"],p["slot"]-1)
+ # Product object coordinates are local to its SKU root. Reset root to
+ # world origin for easy drag-and-drop placement in Unreal.
+ root.location=(0,0,0)
+ bpy.ops.object.select_all(action="DESELECT")
+ root.select_set(True)
+ objects=[o for o in S.objects if o.type=="MESH" and o.parent==root]
+ for o in objects:o.select_set(True)
+ C.view_layer.objects.active=root
+ destination=os.path.join(OUT,"Batch_%02d_%s"%(batch["batch_number"],batch["name"]))
+ os.makedirs(destination,exist_ok=True)
+ filepath=os.path.join(destination,p["id"]+".glb")
+ bpy.ops.export_scene.gltf(filepath=filepath,export_format="GLB",
+     use_selection=True,export_materials="EXPORT",export_yup=True,
+     export_apply=True,export_draco_mesh_compression_enable=False)
+ with open(filepath,"rb") as stream:
+  magic,version,total=struct.unpack("<4sII",stream.read(12))
+  chunk,typecode=struct.unpack("<I4s",stream.read(8))
+  gltf=json.loads(stream.read(chunk))
+ assert magic==b"glTF" and version==2 and typecode==b"JSON"
+ assert total==os.path.getsize(filepath)
+ assert len(gltf.get("meshes",[]))>=2
+ assert len(gltf.get("images",[]))>=1
+ assert any(p["name"].lower() in node.get("name","").lower() for node in gltf["nodes"])
+ assert len(objects)==n
+ print("SINGLE SKU VALIDATED",p["id"],n,"parts",total,"bytes",flush=True)
+
 def main():
  assert len(CAT["batches"])==5 and CAT["count"]==100
  for b in CAT["batches"]:
   assert len(b["products"])==20
-  export_batch(b)
- assert len([p for p in os.listdir(OUT) if p.endswith(".glb")])==5
- print("ALL DONE: 100 genuinely different product labels and distinct scene nodes packed into five 20-product GLBs",flush=True)
+  for p in b["products"]:
+   export_individual(p,b)
+  print("FINISHED 20 individual GLBs in",b["name"],flush=True)
+ import glob
+ files=glob.glob(os.path.join(OUT,"Batch_*","*.glb"))
+ assert len(files)==100,(len(files),"expected 100 separate GLBs")
+ print("ALL DONE: 100 genuinely different dairy products, 100 SEPARATE GLB FILES",flush=True)
 if __name__=="__main__":main()
