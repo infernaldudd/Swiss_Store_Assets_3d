@@ -5,6 +5,7 @@ on:
     paths:
       - "tools/build_drinks.py"
       - "tools/generate_drink_labels.py"
+      - "tools/generate_surface_finish_maps.py"
       - ".github/workflows/build-drinks.yml"
 permissions:
   contents: write
@@ -23,6 +24,7 @@ jobs:
           sudo apt-get install -y blender python3-numpy python3-pil fonts-lato
       - name: Generate 12 original 2K curved-print texture maps
         run: |
+          /usr/bin/python3 tools/generate_surface_finish_maps.py
           /usr/bin/python3 tools/generate_drink_labels.py
           test "$(find textures/drinks -name '*_wrap_2K.png' | wc -l)" -eq 12
       - name: Rebuild and validate all twelve properly labelled drinks
@@ -38,7 +40,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A assets/drinks/ textures/drinks/ previews/drinks/
+          git add -A assets/drinks/ textures/drinks/ previews/drinks/ textures/surface_finishes/
           if ! git diff --cached --quiet; then
             git commit -m "Fix all 12 beverage label meshes with original curved 2K UV print artwork"
             git pull --rebase origin main
