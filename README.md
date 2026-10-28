@@ -172,3 +172,33 @@ All store brands, decorative artworks and product entries are fictional. The pro
 - `tools/build_store_signs.py` regenerates the double-A; use `RENDER_PREVIEWS=1 PREVIEW_TARGET=AMIGOS_DoubleA_Projected blender -b --python tools/build_store_signs.py` to regenerate the transparent proof render.
 
 These remain original fictional signs and product labels for a commercial game. GLB structural tests verify the absence of removed backing/caption parts and presence of UV artwork. Image-based rendering is a useful QA step; not a guarantee of film-level realism.
+
+
+## Modular supermarket shelving (2026-10-28)
+
+Two complete original game-ready steel supermarket shelf variants are in \`assets/shelving/\`:
+
+- \`Swiss_Supermarket_Wall_Shelf_1m_5Tier.glb\` — one ~1.04m-wide wall/gondola shelving bay, about 2.11m tall, approximately 0.50m deep with **five adjustable shallow tray shelves**. Designed to accept your other GLB grocery products.
+- \`Swiss_Supermarket_Wall_Shelf_2m_TwoBay.glb\` — a **2.08m two-bay version**, same components, separate mesh parts for practical Unreal editing.
+- \`source/shelving/Swiss_Supermarket_Wall_Shelf_1m_5Tier.blend\` — original editable Blender source.
+- \`previews/shelving/\` — two studio reference renders.
+- \`textures/shelving/Shelf_Price_Tickets_2K.png\` — original fictional CHF shelf tags in a 2048x1024 UV atlas.
+
+Construction: white/warm-grey powder-coated stamped steel, exposed galvanised folded reinforcement and bolt hardware, recessed adjustable upright slots, structural triangular shelf brackets, curved/rolled price display front, clear PET price-holder strips, anti-tip out-rigger feet, real rubber feet, rear pressed-steel reinforcements, and correct small fabrication bevels. Shelf props are deliberately empty; dress them with the separate canned food, drink, dairy, noodle and snacks GLBs. Render-only lighting and floor are **not** exported to the game GLBs. Front points toward Blender -Y. Dimensions in metres.
+
+### Realism and selective product gloss pass
+
+Existing supermarket products preserve their original printed fictional branding, but **varying metal/plastic/paper roughness** is applied instead of a single uniformly matte, plastic-looking finish. The PBR maps in \`textures/surface_finishes/\` are authored specifically for glossy laminated prints, semi-gloss vinyl, flexible foil, PET bottles, painted steel, bare brushed metal, paper, and stamped foil lids. A subtle micro-normal map breaks up perfect surfaces. Metals retain metallic reflection, paper remains much rougher, glossy labels respond to shelf lighting, and transparent film gets its own reflections. The updated material parameters are exported into the relevant GLBs; actual visual sheen also depends on Unreal's environment lighting, reflection captures and tonemapping.
+
+Covered generators: \`tools/build_drinks.py\`, \`tools/build_chip_library.py\`, and \`tools/build_dairy_100.py\`. Each collection retains its previous number of independently exported products (12 drinks, 88 chips, 100 separate dairy SKU stock-batch GLBs) and materials are rebuilt from the original artwork rather than replacing the artwork itself. The 100 dairy product files still each contain 5–20 identical real packages of one SKU.
+
+Rebuild:
+
+\`\`\`bash
+/usr/bin/python3 tools/generate_surface_finish_maps.py
+/usr/bin/python3 tools/generate_store_shelf_textures.py
+blender -b -t 2 --python tools/build_store_shelf.py
+RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_store_shelf.py
+\`\`\`
+
+The 2K shelf price labels are fictional decorations, **not real retail prices**. Visual renders are QA references, not guarantees of AAA film-level photorealism. 
