@@ -1,0 +1,1053 @@
+{
+  "title": "Helvetia 100 distinctive Swiss dairy products",
+  "count": 100,
+  "batch_size": 20,
+  "output_files": 5,
+  "important": "100 distinct SKUs each with independently named meshes and original artwork. Not 100 copies of one shape. Each batch is one GLB scene containing 20 individually selectable products.",
+  "packaging_shapes": [
+    "carton",
+    "bottle",
+    "cup",
+    "tub",
+    "wedge",
+    "tray",
+    "pouch",
+    "round",
+    "brick",
+    "spray",
+    "can"
+  ],
+  "license": "All brands and packaging artwork fictional; flavor/category inspiration from Swiss supermarket food groups.",
+  "batches": [
+    {
+      "batch_number": 1,
+      "name": "Milk_Cream_Drinks",
+      "products": [
+        {
+          "id": "loop_vollmilch_3_5",
+          "brand": "LOOP",
+          "name": "Vollmilch 3.5%",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#3c7fae",
+          "slot": 1,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_milchdrink_1_5",
+          "brand": "LOOP",
+          "name": "Milchdrink 1.5%",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#5cb3cf",
+          "slot": 2,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_magermilch_0_1",
+          "brand": "LOOP",
+          "name": "Magermilch 0.1%",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#8dc8dd",
+          "slot": 3,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_uht_vollmilch",
+          "brand": "LOOP",
+          "name": "UHT Vollmilch",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#305a99",
+          "slot": 4,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_uht_milchdrink",
+          "brand": "LOOP",
+          "name": "UHT Milchdrink",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#5696bd",
+          "slot": 5,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_laktosefrei_vollmilch",
+          "brand": "LOOP",
+          "name": "Laktosefrei Vollmilch",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#886bc1",
+          "slot": 6,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_laktosefrei_drink",
+          "brand": "LOOP",
+          "name": "Laktosefrei Drink",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#b18bc3",
+          "slot": 7,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_bio_vollmilch",
+          "brand": "AMIGOS",
+          "name": "Bio Vollmilch",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#4a9a56",
+          "slot": 8,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_bio_milchdrink",
+          "brand": "AMIGOS",
+          "name": "Bio Milchdrink",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#67b37c",
+          "slot": 9,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_bergmilch",
+          "brand": "AMIGOS",
+          "name": "Bergmilch",
+          "net": 1000,
+          "shape": "carton",
+          "color": "#496b97",
+          "slot": 10,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_weidemilch",
+          "brand": "ALP FARM",
+          "name": "Weidemilch",
+          "net": 1000,
+          "shape": "bottle",
+          "color": "#398daf",
+          "slot": 11,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_jersey_milch",
+          "brand": "ALP FARM",
+          "name": "Jersey Milch",
+          "net": 750,
+          "shape": "bottle",
+          "color": "#caab59",
+          "slot": 12,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_ziegenmilch",
+          "brand": "ALP FARM",
+          "name": "Ziegenmilch",
+          "net": 500,
+          "shape": "bottle",
+          "color": "#6e88a3",
+          "slot": 13,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_schoko_milch",
+          "brand": "LOOP",
+          "name": "Schoko Milch",
+          "net": 500,
+          "shape": "bottle",
+          "color": "#895236",
+          "slot": 14,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_erdbeer_milch",
+          "brand": "LOOP",
+          "name": "Erdbeer Milch",
+          "net": 500,
+          "shape": "bottle",
+          "color": "#d46d8b",
+          "slot": 15,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_bananen_milch",
+          "brand": "AMIGOS",
+          "name": "Bananen Milch",
+          "net": 500,
+          "shape": "bottle",
+          "color": "#dfc864",
+          "slot": 16,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_vanille_milch",
+          "brand": "AMIGOS",
+          "name": "Vanille Milch",
+          "net": 500,
+          "shape": "bottle",
+          "color": "#c7b778",
+          "slot": 17,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_buttermilch",
+          "brand": "ALP FARM",
+          "name": "Buttermilch",
+          "net": 500,
+          "shape": "bottle",
+          "color": "#7ab4a9",
+          "slot": 18,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_kefir_nature",
+          "brand": "ALP FARM",
+          "name": "Kefir Nature",
+          "net": 500,
+          "shape": "bottle",
+          "color": "#74ad93",
+          "slot": 19,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_vollrahm_35",
+          "brand": "AMIGOS",
+          "name": "Vollrahm 35%",
+          "net": 500,
+          "shape": "carton",
+          "color": "#397bb4",
+          "slot": 20,
+          "original_fictional_artwork": true
+        }
+      ]
+    },
+    {
+      "batch_number": 2,
+      "name": "Yoghurt_Drinks",
+      "products": [
+        {
+          "id": "loop_joghurt_nature",
+          "brand": "LOOP",
+          "name": "Joghurt Nature",
+          "net": 180,
+          "shape": "cup",
+          "color": "#d2c8b3",
+          "slot": 1,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_joghurt_erdbeer",
+          "brand": "LOOP",
+          "name": "Joghurt Erdbeer",
+          "net": 180,
+          "shape": "cup",
+          "color": "#d45d75",
+          "slot": 2,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_joghurt_heidelbeer",
+          "brand": "LOOP",
+          "name": "Joghurt Heidelbeer",
+          "net": 180,
+          "shape": "cup",
+          "color": "#6974ac",
+          "slot": 3,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_joghurt_himbeer",
+          "brand": "LOOP",
+          "name": "Joghurt Himbeer",
+          "net": 180,
+          "shape": "cup",
+          "color": "#c3537f",
+          "slot": 4,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_joghurt_pfirsich",
+          "brand": "LOOP",
+          "name": "Joghurt Pfirsich",
+          "net": 180,
+          "shape": "cup",
+          "color": "#e7aa6a",
+          "slot": 5,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_joghurt_aprikose",
+          "brand": "LOOP",
+          "name": "Joghurt Aprikose",
+          "net": 180,
+          "shape": "cup",
+          "color": "#e6a047",
+          "slot": 6,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_joghurt_vanille",
+          "brand": "AMIGOS",
+          "name": "Joghurt Vanille",
+          "net": 200,
+          "shape": "cup",
+          "color": "#d9c68a",
+          "slot": 7,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_joghurt_kirsche",
+          "brand": "AMIGOS",
+          "name": "Joghurt Kirsche",
+          "net": 200,
+          "shape": "cup",
+          "color": "#ae485d",
+          "slot": 8,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_joghurt_mango",
+          "brand": "AMIGOS",
+          "name": "Joghurt Mango",
+          "net": 200,
+          "shape": "cup",
+          "color": "#efa248",
+          "slot": 9,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_joghurt_zitrone",
+          "brand": "AMIGOS",
+          "name": "Joghurt Zitrone",
+          "net": 200,
+          "shape": "cup",
+          "color": "#d8c96c",
+          "slot": 10,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_joghurt_kokos",
+          "brand": "AMIGOS",
+          "name": "Joghurt Kokos",
+          "net": 200,
+          "shape": "cup",
+          "color": "#b0c8b6",
+          "slot": 11,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_joghurt_mocca",
+          "brand": "AMIGOS",
+          "name": "Joghurt Mocca",
+          "net": 200,
+          "shape": "cup",
+          "color": "#805d50",
+          "slot": 12,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_greek_nature",
+          "brand": "ALP FARM",
+          "name": "Greek Nature",
+          "net": 150,
+          "shape": "cup",
+          "color": "#4f8eb3",
+          "slot": 13,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_greek_honig",
+          "brand": "ALP FARM",
+          "name": "Greek Honig",
+          "net": 150,
+          "shape": "cup",
+          "color": "#d9ac5a",
+          "slot": 14,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_skyr_vanille",
+          "brand": "ALP FARM",
+          "name": "Skyr Vanille",
+          "net": 150,
+          "shape": "cup",
+          "color": "#77b4bd",
+          "slot": 15,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_skyr_beeren",
+          "brand": "ALP FARM",
+          "name": "Skyr Beeren",
+          "net": 150,
+          "shape": "cup",
+          "color": "#ad6c9f",
+          "slot": 16,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_bio_bircher",
+          "brand": "ALP FARM",
+          "name": "Bio Bircher",
+          "net": 180,
+          "shape": "cup",
+          "color": "#91a569",
+          "slot": 17,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "sparfix_joghurt_schokolade",
+          "brand": "SparFix",
+          "name": "Joghurt Schokolade",
+          "net": 180,
+          "shape": "cup",
+          "color": "#8b563e",
+          "slot": 18,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_joghurtdrink_mango",
+          "brand": "LOOP",
+          "name": "Joghurtdrink Mango",
+          "net": 330,
+          "shape": "bottle",
+          "color": "#e9a94e",
+          "slot": 19,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_joghurtdrink_erdbeer",
+          "brand": "AMIGOS",
+          "name": "Joghurtdrink Erdbeer",
+          "net": 330,
+          "shape": "bottle",
+          "color": "#c54c70",
+          "slot": 20,
+          "original_fictional_artwork": true
+        }
+      ]
+    },
+    {
+      "batch_number": 3,
+      "name": "Cheese",
+      "products": [
+        {
+          "id": "alp_farm_emmentaler_aop",
+          "brand": "ALP FARM",
+          "name": "Emmentaler AOP",
+          "net": 200,
+          "shape": "wedge",
+          "color": "#e8c56d",
+          "slot": 1,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_gruyere_aop",
+          "brand": "ALP FARM",
+          "name": "Gruyere AOP",
+          "net": 200,
+          "shape": "wedge",
+          "color": "#d3a951",
+          "slot": 2,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_appenzeller",
+          "brand": "ALP FARM",
+          "name": "Appenzeller",
+          "net": 200,
+          "shape": "wedge",
+          "color": "#ce953f",
+          "slot": 3,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_tilsiter_mild",
+          "brand": "ALP FARM",
+          "name": "Tilsiter Mild",
+          "net": 200,
+          "shape": "wedge",
+          "color": "#e5aa61",
+          "slot": 4,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_raclette_nature",
+          "brand": "ALP FARM",
+          "name": "Raclette Nature",
+          "net": 200,
+          "shape": "tray",
+          "color": "#e5c87b",
+          "slot": 5,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_bergkaese_reif",
+          "brand": "ALP FARM",
+          "name": "Bergkaese Reif",
+          "net": 200,
+          "shape": "wedge",
+          "color": "#bd9352",
+          "slot": 6,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_kasescheiben_mild",
+          "brand": "LOOP",
+          "name": "Käsescheiben Mild",
+          "net": 150,
+          "shape": "tray",
+          "color": "#ddb45c",
+          "slot": 7,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_kasescheiben_rezent",
+          "brand": "LOOP",
+          "name": "Käsescheiben Rezent",
+          "net": 150,
+          "shape": "tray",
+          "color": "#e5ad4e",
+          "slot": 8,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_reibkase_pizza",
+          "brand": "LOOP",
+          "name": "Reibkäse Pizza",
+          "net": 150,
+          "shape": "pouch",
+          "color": "#e8b94a",
+          "slot": 9,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_reibkase_raclette",
+          "brand": "AMIGOS",
+          "name": "Reibkäse Raclette",
+          "net": 150,
+          "shape": "pouch",
+          "color": "#e1b55d",
+          "slot": 10,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_mozzarella_kugel",
+          "brand": "AMIGOS",
+          "name": "Mozzarella Kugel",
+          "net": 125,
+          "shape": "tub",
+          "color": "#73a1af",
+          "slot": 11,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_mozzarella_scheiben",
+          "brand": "AMIGOS",
+          "name": "Mozzarella Scheiben",
+          "net": 125,
+          "shape": "tray",
+          "color": "#78b6c3",
+          "slot": 12,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_burrata_frisch",
+          "brand": "ALP FARM",
+          "name": "Burrata Frisch",
+          "net": 150,
+          "shape": "tub",
+          "color": "#90b1a9",
+          "slot": 13,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_feta_wurfel",
+          "brand": "LOOP",
+          "name": "Feta Würfel",
+          "net": 200,
+          "shape": "tub",
+          "color": "#789fc9",
+          "slot": 14,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_ziegenkase_rolle",
+          "brand": "ALP FARM",
+          "name": "Ziegenkäse Rolle",
+          "net": 180,
+          "shape": "tray",
+          "color": "#e2d5ab",
+          "slot": 15,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_brie_de_suisse",
+          "brand": "ALP FARM",
+          "name": "Brie de Suisse",
+          "net": 200,
+          "shape": "round",
+          "color": "#ede1bd",
+          "slot": 16,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_camembert",
+          "brand": "ALP FARM",
+          "name": "Camembert",
+          "net": 200,
+          "shape": "round",
+          "color": "#c9af87",
+          "slot": 17,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_frischkase_nature",
+          "brand": "LOOP",
+          "name": "Frischkäse Nature",
+          "net": 200,
+          "shape": "tub",
+          "color": "#a2c6bb",
+          "slot": 18,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_frischkase_krauter",
+          "brand": "AMIGOS",
+          "name": "Frischkäse Kräuter",
+          "net": 200,
+          "shape": "tub",
+          "color": "#7ba57e",
+          "slot": 19,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "sparfix_huttenkase",
+          "brand": "SparFix",
+          "name": "Hüttenkäse",
+          "net": 200,
+          "shape": "tub",
+          "color": "#9cb7b2",
+          "slot": 20,
+          "original_fictional_artwork": true
+        }
+      ]
+    },
+    {
+      "batch_number": 4,
+      "name": "Butter_Rahm",
+      "products": [
+        {
+          "id": "loop_butter_ungesalzen",
+          "brand": "LOOP",
+          "name": "Butter Ungesalzen",
+          "net": 250,
+          "shape": "brick",
+          "color": "#ead18b",
+          "slot": 1,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_butter_gesalzen",
+          "brand": "LOOP",
+          "name": "Butter Gesalzen",
+          "net": 250,
+          "shape": "brick",
+          "color": "#e5bc6d",
+          "slot": 2,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_bio_butter",
+          "brand": "ALP FARM",
+          "name": "Bio Butter",
+          "net": 200,
+          "shape": "brick",
+          "color": "#ded095",
+          "slot": 3,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_sauerrahmbutter",
+          "brand": "ALP FARM",
+          "name": "Sauerrahmbutter",
+          "net": 200,
+          "shape": "brick",
+          "color": "#bfbe89",
+          "slot": 4,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_kochbutter",
+          "brand": "AMIGOS",
+          "name": "Kochbutter",
+          "net": 250,
+          "shape": "brick",
+          "color": "#d2aa61",
+          "slot": 5,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "sparfix_butter_portion",
+          "brand": "SparFix",
+          "name": "Butter Portion",
+          "net": 100,
+          "shape": "brick",
+          "color": "#e8c87e",
+          "slot": 6,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_krauterbutter",
+          "brand": "LOOP",
+          "name": "Kräuterbutter",
+          "net": 100,
+          "shape": "brick",
+          "color": "#8aaf63",
+          "slot": 7,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_knoblauchbutter",
+          "brand": "LOOP",
+          "name": "Knoblauchbutter",
+          "net": 100,
+          "shape": "brick",
+          "color": "#b8bf83",
+          "slot": 8,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_laktosefreie_butter",
+          "brand": "AMIGOS",
+          "name": "Laktosefreie Butter",
+          "net": 200,
+          "shape": "brick",
+          "color": "#9ebca4",
+          "slot": 9,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "sparfix_sonnenblumen_margarine",
+          "brand": "SparFix",
+          "name": "Sonnenblumen Margarine",
+          "net": 250,
+          "shape": "tub",
+          "color": "#e7be53",
+          "slot": 10,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "sparfix_oliven_streichfett",
+          "brand": "SparFix",
+          "name": "Oliven Streichfett",
+          "net": 250,
+          "shape": "tub",
+          "color": "#9cba68",
+          "slot": 11,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_creme_fraiche",
+          "brand": "AMIGOS",
+          "name": "Crème Fraîche",
+          "net": 180,
+          "shape": "tub",
+          "color": "#a2bcd2",
+          "slot": 12,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_saurer_halbrahm",
+          "brand": "AMIGOS",
+          "name": "Saurer Halbrahm",
+          "net": 180,
+          "shape": "cup",
+          "color": "#85b5be",
+          "slot": 13,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_mascarpone",
+          "brand": "ALP FARM",
+          "name": "Mascarpone",
+          "net": 250,
+          "shape": "tub",
+          "color": "#ddcaa6",
+          "slot": 14,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_doppelrahm",
+          "brand": "ALP FARM",
+          "name": "Doppelrahm",
+          "net": 200,
+          "shape": "tub",
+          "color": "#b2bdcc",
+          "slot": 15,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_schlagrahm_spray",
+          "brand": "LOOP",
+          "name": "Schlagrahm Spray",
+          "net": 250,
+          "shape": "spray",
+          "color": "#7ba1bd",
+          "slot": 16,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_kaffeerahm_portionen",
+          "brand": "LOOP",
+          "name": "Kaffeerahm Portionen",
+          "net": 100,
+          "shape": "tray",
+          "color": "#b5a089",
+          "slot": 17,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_kondensmilch",
+          "brand": "LOOP",
+          "name": "Kondensmilch",
+          "net": 397,
+          "shape": "can",
+          "color": "#d6b27a",
+          "slot": 18,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_kochrahm",
+          "brand": "AMIGOS",
+          "name": "Kochrahm",
+          "net": 500,
+          "shape": "carton",
+          "color": "#6e9cc5",
+          "slot": 19,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_halbrahm_25",
+          "brand": "AMIGOS",
+          "name": "Halbrahm 25%",
+          "net": 500,
+          "shape": "carton",
+          "color": "#a7bccb",
+          "slot": 20,
+          "original_fictional_artwork": true
+        }
+      ]
+    },
+    {
+      "batch_number": 5,
+      "name": "Quark_Desserts",
+      "products": [
+        {
+          "id": "loop_magerquark_nature",
+          "brand": "LOOP",
+          "name": "Magerquark Nature",
+          "net": 250,
+          "shape": "tub",
+          "color": "#8dbbb8",
+          "slot": 1,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_rahmquark_nature",
+          "brand": "LOOP",
+          "name": "Rahmquark Nature",
+          "net": 250,
+          "shape": "tub",
+          "color": "#74a0b3",
+          "slot": 2,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_quark_erdbeer",
+          "brand": "AMIGOS",
+          "name": "Quark Erdbeer",
+          "net": 150,
+          "shape": "cup",
+          "color": "#d77789",
+          "slot": 3,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_quark_heidelbeer",
+          "brand": "AMIGOS",
+          "name": "Quark Heidelbeer",
+          "net": 150,
+          "shape": "cup",
+          "color": "#7a78b2",
+          "slot": 4,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_quark_vanille",
+          "brand": "AMIGOS",
+          "name": "Quark Vanille",
+          "net": 150,
+          "shape": "cup",
+          "color": "#d6c488",
+          "slot": 5,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_quark_limette",
+          "brand": "AMIGOS",
+          "name": "Quark Limette",
+          "net": 150,
+          "shape": "cup",
+          "color": "#a6c86d",
+          "slot": 6,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_protein_quark_nature",
+          "brand": "ALP FARM",
+          "name": "Protein Quark Nature",
+          "net": 250,
+          "shape": "tub",
+          "color": "#6095ad",
+          "slot": 7,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_protein_quark_schoko",
+          "brand": "ALP FARM",
+          "name": "Protein Quark Schoko",
+          "net": 250,
+          "shape": "tub",
+          "color": "#866354",
+          "slot": 8,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_milchreis_vanille",
+          "brand": "LOOP",
+          "name": "Milchreis Vanille",
+          "net": 200,
+          "shape": "cup",
+          "color": "#dfc892",
+          "slot": 9,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_milchreis_zimt",
+          "brand": "LOOP",
+          "name": "Milchreis Zimt",
+          "net": 200,
+          "shape": "cup",
+          "color": "#caa77a",
+          "slot": 10,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "loop_griesspudding",
+          "brand": "LOOP",
+          "name": "Griesspudding",
+          "net": 175,
+          "shape": "cup",
+          "color": "#d8c08d",
+          "slot": 11,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_pudding_schokolade",
+          "brand": "AMIGOS",
+          "name": "Pudding Schokolade",
+          "net": 200,
+          "shape": "cup",
+          "color": "#8e5245",
+          "slot": 12,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_pudding_vanille",
+          "brand": "AMIGOS",
+          "name": "Pudding Vanille",
+          "net": 200,
+          "shape": "cup",
+          "color": "#e1c67a",
+          "slot": 13,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_caramel_flan",
+          "brand": "AMIGOS",
+          "name": "Caramel Flan",
+          "net": 200,
+          "shape": "cup",
+          "color": "#c8834d",
+          "slot": 14,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_mousse_schokolade",
+          "brand": "ALP FARM",
+          "name": "Mousse Schokolade",
+          "net": 150,
+          "shape": "cup",
+          "color": "#744b45",
+          "slot": 15,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_mousse_erdbeer",
+          "brand": "ALP FARM",
+          "name": "Mousse Erdbeer",
+          "net": 150,
+          "shape": "cup",
+          "color": "#c4657e",
+          "slot": 16,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_tiramisu_dessert",
+          "brand": "ALP FARM",
+          "name": "Tiramisu Dessert",
+          "net": 180,
+          "shape": "cup",
+          "color": "#a68165",
+          "slot": 17,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "alp_farm_panna_cotta",
+          "brand": "ALP FARM",
+          "name": "Panna Cotta",
+          "net": 180,
+          "shape": "cup",
+          "color": "#d6c4b0",
+          "slot": 18,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "sparfix_blanc_battu",
+          "brand": "SparFix",
+          "name": "Blanc Battu",
+          "net": 250,
+          "shape": "tub",
+          "color": "#bed0c8",
+          "slot": 19,
+          "original_fictional_artwork": true
+        },
+        {
+          "id": "amigos_quark_zitrone",
+          "brand": "AMIGOS",
+          "name": "Quark Zitrone",
+          "net": 150,
+          "shape": "cup",
+          "color": "#d9ca6e",
+          "slot": 20,
+          "original_fictional_artwork": true
+        }
+      ]
+    }
+  ]
+}
