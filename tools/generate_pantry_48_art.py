@@ -72,8 +72,12 @@ def illustration(draw,p,rng):
                 fill=(102,62,39),outline=(178,128,77),width=3)
    draw.arc((xx-rad*.22,yy-rad*.34,xx+rad*.22,yy+rad*.34),-60,135,fill=(46,28,21),width=3)
   elif "choc" in form or form=="flowpack":
-   draw.rounded_rectangle((xx-rad*.65,yy-rad*.55,xx+rad*.65,yy+rad*.55),radius=4,
-                          fill=mix(c,(102,57,38),.5),outline=mix(c,(241,205,150),.3),width=2)
+   # A little chocolate shard ink stroke; round corners on tiny floating
+   # rectangular coordinates cause Pillow to reject valid fractional bounds.
+   draw.line((round(xx-rad*.65),round(yy),round(xx+rad*.65),round(yy)),
+             fill=mix(c,(102,57,38),.5),width=max(5,round(rad*.72)))
+   draw.line((round(xx-rad*.48),round(yy-1),round(xx+rad*.48),round(yy-1)),
+             fill=mix(c,(241,205,150),.3),width=2)
   elif form in ("glass_jar","squeeze","bottle"):
    draw.ellipse((xx-rad*.7,yy-rad*.55,xx+rad*.7,yy+rad*.55),
                 fill=mix(c,(255,235,173),.23),outline=mix(c,(78,61,43),.32),width=3)
