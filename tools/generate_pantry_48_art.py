@@ -47,17 +47,18 @@ def illustration(draw,p,rng):
  # Original stylized photoprint-style shapes, not a copied product logo.
  # Deliberately more subtle than large flat cartoon illustrations.
  form=p["form"]
- if form in ("glass_jar","squeeze","bottle"):
-  n=22
- elif form in ("choc_bar","cookie_box","flowpack"):
-  n=17
- else:n=30
+ if form in ("glass_jar","squeeze","bottle"):n=105
+ elif form in ("choc_bar","cookie_box","flowpack"):n=115
+ elif form in ("pasta_bag","rice_bag","standup_pouch","cereal_box","paper_sack"):n=165
+ else:n=100
+ # Many shaded individual ingredients produce a believable food illustration
+ # at shelf distance; isolated oversized strokes looked like a blank cartoon.
  for j in range(n):
   ang=rng.uniform(0,math.tau)
-  dist=rng.uniform(0,190)
+  dist=rng.uniform(0,215)
   xx=1024+dist*math.cos(ang)
-  yy=735+dist*.50*math.sin(ang)
-  rad=rng.randint(10,40)
+  yy=735+dist*.56*math.sin(ang)
+  rad=rng.randint(6,19)
   if "pasta" in form:
    # Penne/short pasta printed decorative ink; wheat colour and dark grooves.
    # Narrow pasta strokes are lines, not short-radius rectangles.
