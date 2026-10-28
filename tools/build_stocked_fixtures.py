@@ -269,7 +269,7 @@ def populate_chiller(scene):
    for row,y in enumerate(ys):
     # The first row always faces outward, no clipping the door pane.
     lim=(center-.368,center+.368,-.309,.287,bottom,bottom+.269)
-    place_line([key],[*range(1)][0] if False else .731,center,y,bottom,scene,lim,[count])
+    place_line([key],.731,center,y,bottom,scene,lim,[count])
  print("CHILLER STOCKED",scene,REPORT["scenes"][scene],flush=True)
 
 def pizza_material(name,color,rough=.6,metal=0):
