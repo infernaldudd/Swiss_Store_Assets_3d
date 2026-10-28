@@ -31,7 +31,9 @@ jobs:
         run: |
           blender -b -t 2 --python tools/build_dairy_100.py
           test "$(find assets/dairy_100 -mindepth 2 -name '*.glb' | wc -l)" -eq 100
-          du -sh assets/dairy_100/\n          # Remove obsolete mixed-SKU grouped scenes; keep only one-SKU stock-batch GLBs.\n          rm -f assets/dairy_100/Batch_*_20_Distinct_Products.glb
+          du -sh assets/dairy_100/
+          # Remove obsolete mixed-SKU grouped scenes; keep only one-SKU stock-batch GLBs.
+          rm -f assets/dairy_100/Batch_*_20_Distinct_Products.glb
       - name: Validate 100 distinct SKU GLBs, real 5-20 unit meshes per file, and unique labels
         run: |
           /usr/bin/python3 - <<'PY'
