@@ -1,0 +1,87 @@
+{
+  "scenes": {
+    "shelf1": {
+      "units": 59,
+      "skus": {
+        "paprika": 2,
+        "natural": 2,
+        "ravioli": 3,
+        "corn": 3,
+        "peas": 2,
+        "noodles": 6,
+        "noodles2": 6,
+        "noodles3": 3,
+        "tuna": 3,
+        "bbq": 2,
+        "truffle": 2,
+        "tomato": 3,
+        "peach": 3,
+        "cola": 6,
+        "orange": 3,
+        "energy": 6,
+        "smoky": 2,
+        "beet": 2
+      },
+      "placement_failures": []
+    },
+    "shelf2": {
+      "units": 118,
+      "skus": {
+        "paprika": 4,
+        "natural": 4,
+        "ravioli": 6,
+        "corn": 6,
+        "peas": 4,
+        "noodles": 12,
+        "noodles2": 12,
+        "noodles3": 6,
+        "tuna": 6,
+        "bbq": 4,
+        "truffle": 4,
+        "tomato": 6,
+        "peach": 6,
+        "cola": 12,
+        "orange": 6,
+        "energy": 12,
+        "smoky": 4,
+        "beet": 4
+      },
+      "placement_failures": []
+    },
+    "chiller": {
+      "units": 864,
+      "skus": {
+        "milk": 72,
+        "bio_milk": 18,
+        "choco_milk": 54,
+        "ice_tea": 90,
+        "water": 72,
+        "apple_juice": 54,
+        "orange": 36,
+        "yoghurt_red": 36,
+        "yoghurt_blue": 36,
+        "yoghurt_mango": 18,
+        "skyr": 36,
+        "greek": 36,
+        "quark": 36,
+        "dessert": 18,
+        "raclette": 54,
+        "cheese": 54,
+        "feta": 54,
+        "mozza": 54,
+        "energy": 18,
+        "cola": 18
+      },
+      "placement_failures": []
+    },
+    "deli": {
+      "units": 12,
+      "skus": {
+        "Margherita": 4,
+        "Garden_Vegetable": 4,
+        "Spicy": 4
+      },
+      "placement_failures": []
+    }
+  }
+}
