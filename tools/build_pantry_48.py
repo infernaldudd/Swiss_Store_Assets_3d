@@ -172,7 +172,7 @@ def pouch(name,w,d,h,ink,edge,smooth=True,sealed=True):
    uv.append([(.02,0),(.22,0),(.22,1),(.02,1)])
  for j in range(nz):
   for i in (0,nx):
-   ff=[idx(0,i,j),idx(0,i,j+1),idx(1,i,j+1),idx(1,i)]
+   ff=[idx(0,i,j),idx(0,i,j+1),idx(1,i,j+1),idx(1,i,j)]
    faces.append(ff if i==nx else ff[::-1])
    uv.append([(.02,0),(.22,0),(.22,1),(.02,1)])
  a=mesh(name+" | inflated wrinkled sealed physical bag",v,faces,ink,uv,True)
