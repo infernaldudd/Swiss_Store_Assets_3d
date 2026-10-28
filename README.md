@@ -240,3 +240,38 @@ These are **four new populated variants**, distinct from and preserving the four
 **Placement:** fronts face -Y, world Z is vertical, distances are metres. One loaded scene is one self-contained stocked fixture, so no separate product dependencies are needed at runtime. Materials retain GLB texture data and can be tuned in Unreal Engine 5.7. These are fictional brands only, avoiding direct use of retailer-owned package artwork. The stock layouts are intentionally curated environmental arrangements, not real Coop/Migros inventories.
 
 The glass-door version remains a fridge fixture, not a claim of functioning real refrigeration. Glass transparency, emissive LEDs, and exposure can need an Unreal material-instance/lighting adjustment. Prefer instancing repeated SKU meshes at runtime when spawning many complete store aisles.
+
+
+## 48 additional fictional pantry products inspired by Coop assortment
+
+Source inspiration: <https://www.coop.ch/en/food/pantry/c/m_0140>. These are **not** exact branded Coop products; names, art and visual branding are originally authored fiction for a commercially sold Swiss-themed video game. This set fills shelves beyond the existing chips, dairy, canned food, noodles, beverages and refrigeration equipment.
+
+**48 distinct SKUs** = **48 independent `.glb` files**, filed under `assets/pantry_48/`, eight category subfolders containing six products each. Every model holds a physical 6–12-unit organized stock batch of **one SKU only** (411 total physical package units). Every package stays independently selectable in Blender/Unreal via `RETAIL_UNIT_###` child nodes. Repeated units share the same mesh datablocks and image materials to avoid duplicating unnecessary geometry.
+
+| Subfolder | Six genuinely different products |
+| --- | --- |
+| `01_Pasta` | Spaghetti, penne, fusilli, farfalline, egg noodles, family spaghetti |
+| `02_Rice_Grains` | Basmati, risotto, jasmine, bulgur, tricolour quinoa, long-grain rice |
+| `03_Breakfast` | Cornflakes, Choco Pops, Honey Crunch, Bircher muesli, oats, nut granola |
+| `04_Coffee_Tea` | Ground coffee, espresso beans, coffee classic, cappuccino, black tea, fruit tea |
+| `05_Sweets_Biscuits` | Milk, dark and hazelnut chocolate; butter biscuits, oat cookies, wafers |
+| `06_Sauces_Spreads` | Tomato-basil sauce, green pesto, Arrabbiata, strawberry jam, honey, apricot jam |
+| `07_Baking` | Wheat flour, sugar, brown sugar, cocoa powder, baking powder, pancake mix |
+| `08_Condiments` | Olive oil, sunflower oil, balsamic vinegar, mustard, mayonnaise, apple vinegar |
+
+### Asset geometry and materials
+
+Packaging families were modelled differently: irregular flexible sealed bags with inflated printable surfaces and real crimped seams; rectangular cardboard cartons with folded edges, top flaps and original UV six-face print; paper sacks and coffee-brick foil with side folds; metal beverage-style tins; clear glass condiment jars with inner food volumes, actual knurled screw lids and conforming printed labels; separately printed bottles with neck/cap closure; flexible sauce squeeze packages; wrapped chocolate and biscuits. Models have fine geometry, sensible metric dimensions and PBR gloss differentiated by metal/foil, printed polymer, paper and glass. Colours and inscriptions are original.
+
+**Artwork:** `textures/pantry_48/*_2K.jpg` (2048 × 1024 pixels), unique per SKU and embedded into each exported GLB. `previews/pantry_48/` includes one front-art contact sheet for each six-product aisle and `Eight_Actual_Package_Shapes_3D.png`, an actual Blender Cycles render showing eight representative shape families. Art previews are not substitutes for the GLB geometry.
+
+### Rebuild and QA
+
+```bash
+/usr/bin/python3 tools/generate_surface_finish_maps.py
+/usr/bin/python3 tools/generate_pantry_48_art.py
+blender -b -t 2 --python tools/build_pantry_48.py
+blender -b -t 2 --python tools/render_pantry_48_sample.py
+```
+
+`catalog/pantry_48.json` is the authoritative list of all 48 product SKU IDs, original flavours/weights, package form and quantity. The associated GitHub Action validates the file format, original 2K texture resolution, 48 unique texture hashes, 48 GLBs and 411 individual named retail units. Printed label content is fictional; these props are intended as game environment assets. For closer visual realism, inspect packaging specularity and map glTF transparent materials to suitable Unreal Engine material instances under your actual scene lighting.
