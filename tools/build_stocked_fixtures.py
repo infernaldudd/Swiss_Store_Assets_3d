@@ -177,7 +177,7 @@ def stock(key,x,y,bottom,scene_name):
  C.collection.objects.link(clone)
  clone.hide_render=False
  clone.hide_set(False)
- clone.matrix_world=Matrix.Translation((x,y,bottom)) @ norm
+ clone.matrix_world=Matrix.Translation((x,y,bottom)) @ norm @ prototype.matrix_world
  clone["export_stocked_scene"]=True
  clone["source_glb"]=SKU[key]
  clone["shelf_stock_sku"]=key
