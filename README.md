@@ -129,3 +129,33 @@ RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_canned_food.py
 \`\`\`
 
 All files use real-world metres with Blender +Z up. GLB materials have named channels to permit post-import Unreal 5.7 material quality tuning.
+
+
+## 100 distinctive Swiss dairy products — five importable GLB batches
+
+The dairy catalogue covers **100 genuinely different fictional in-game products**, not repeated instances of one milk container. Each of five batch files contains 20 individual SKU root nodes with their own label texture, brand, package class and product metadata, and separate physically shaped submeshes. The first pass deliberately uses five grouped files to reduce asset-browser clutter in Unreal while retaining independently selectable products.
+
+| Batch | Types (20 different SKUs each) | File |
+| --- | --- | --- |
+| 01 | Milk, flavoured milk and cream in cartons/bottles | \`Batch_01_Milk_Cream_Drinks_20_Distinct_Products.glb\` |
+| 02 | Yoghurt pots, Skyr, Greek yoghurt and yoghurt drinks | \`Batch_02_Yoghurt_Drinks_20_Distinct_Products.glb\` |
+| 03 | Hard cheese, soft cheese, mozzarella, feta and grated cheese | \`Batch_03_Cheese_20_Distinct_Products.glb\` |
+| 04 | Butter, margarine, cream, mascarpone and spreads | \`Batch_04_Butter_Rahm_20_Distinct_Products.glb\` |
+| 05 | Quark, milk rice, mousse, pudding and desserts | \`Batch_05_Quark_Desserts_20_Distinct_Products.glb\` |
+
+All five GLBs are under \`assets/dairy_100/\`. **Import as a glTF scene preserving nodes**, not as one automatically merged static mesh. Each of the 20 product root nodes per batch has a unique SKU ID and child meshes: select the root to move or rotate an individual dairy item in your level. Blender generator places the 20 individual items in a 5 × 4 preview grid; these are distinct products and must be arranged on shelves after import.
+
+### Source, art and rebuild
+
+- \`catalog/dairy_100.json\`: 100 product names, unique SKU IDs, packaging shapes and content volumes/weights.
+- \`textures/dairy_100/\`: 100 different authored printed wrap/label JPG textures (1024 × 768), individually packaged with each 3D SKU in the GLBs.
+- \`previews/dairy_100/\`: five gallery contact sheets showing the full 20-product assortment for each batch.
+- \`tools/generate_dairy_artwork.py\`: regenerates original fictional branding/textures and gallery sheets.
+- \`tools/build_dairy_100.py\`: reconstructs the complete 100-product geometry collection with detailed package shapes, lids, lip rims, closures, folded carton tops, and separate label geometry.
+
+\`\`\`bash
+/usr/bin/python3 tools/generate_dairy_artwork.py
+blender -b -t 2 --python tools/build_dairy_100.py
+\`\`\`
+
+The shopping-category inspiration came from Coop and Migros dairy sections; not every fictional SKU corresponds to an actual retailer listing. Third-party logos and packaging are not used. This is a first production-ready environmental-prop pass, not an independently visually inspected scan-quality guarantee.
