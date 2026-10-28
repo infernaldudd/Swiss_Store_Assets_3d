@@ -12,6 +12,7 @@ import bpy,os,json,math,struct,random
 from mathutils import Vector
 ROOT=os.path.abspath(os.path.join(os.path.dirname(__file__),".."))
 ART=os.path.join(ROOT,"textures","dairy_100")
+FIN=os.path.join(ROOT,"textures","surface_finishes")
 OUT=os.path.join(ROOT,"assets","dairy_100")
 PR=os.path.join(ROOT,"previews","dairy_100")
 os.makedirs(OUT,exist_ok=True)
@@ -38,6 +39,28 @@ def mat(name,color=(.7,.7,.7),metal=0,rough=.5,texture=None,alpha=1):
   n=m.node_tree.nodes.new("ShaderNodeTexImage")
   n.image=img
   m.node_tree.links.new(n.outputs["Color"],p.inputs["Base Color"])
+ return m
+def finish(m,filename,normal=False):
+ """Physically differentiated pack reflectivity (linear roughness map)."""
+ bs=m.node_tree.nodes.get("Principled BSDF")
+ path=os.path.join(FIN,filename+".png")
+ assert os.path.isfile(path),path
+ img=bpy.data.images.load(path,check_existing=True)
+ img.colorspace_settings.name="Non-Color"
+ img.pack()
+ tex=m.node_tree.nodes.new("ShaderNodeTexImage")
+ tex.image=img
+ m.node_tree.links.new(tex.outputs["Color"],bs.inputs["Roughness"])
+ if normal:
+  normalpath=os.path.join(FIN,"Soft_Micro_Normal.png")
+  ni=bpy.data.images.load(normalpath,check_existing=True)
+  ni.colorspace_settings.name="Non-Color"
+  ni.pack()
+  n=m.node_tree.nodes.new("ShaderNodeTexImage");n.image=ni
+  normalmap=m.node_tree.nodes.new("ShaderNodeNormalMap")
+  normalmap.inputs["Strength"].default_value=.12
+  m.node_tree.links.new(n.outputs["Color"],normalmap.inputs["Color"])
+  m.node_tree.links.new(normalmap.outputs["Normal"],bs.inputs["Normal"])
  return m
 def modelmesh(name,verts,faces,material,uvs=None,smooth=False):
  me=bpy.data.meshes.new(name+" geo");me.from_pydata(verts,[],faces);me.update()
@@ -282,8 +305,32 @@ def one_product(p,batch_i,k):
         "paper":mat("MULTILAYER WRAPPER | "+named,tuple(min(.99,c*.54+.32) for c in color),rough=.65),
         "film":mat("TRANSLUCENT VACUUM FILM | "+named,(.89,.94,.95),rough=.18,alpha=.32),
         "cap":mat("Moulded screw cap | "+named,tuple(min(.99,c*.62+.3) for c in color),rough=.30)}
- prior=set(S.objects)
+ # A waxed cheese wrapper is not a mirror, and paper cartons remain matte.
+ # Gloss is deliberately concentrated on plastic pots, sealed foil and sleeves.
  shape=p["shape"]
+ printed_finish={
+   "carton":"Matte_Paper_Roughness",
+   "bottle":"SemiGloss_Vinyl_Roughness",
+   "cup":"SemiGloss_Vinyl_Roughness",
+   "tub":"SemiGloss_Vinyl_Roughness",
+   "wedge":"SemiGloss_Vinyl_Roughness",
+   "tray":"SemiGloss_Vinyl_Roughness",
+   "pouch":"Flex_Foil_Roughness",
+   "round":"Matte_Paper_Roughness",
+   "brick":"Flex_Foil_Roughness",
+   "spray":"Glossy_Laminated_Print_Roughness",
+   "can":"Glossy_Laminated_Print_Roughness",
+ }[shape]
+ finish(m["print"],printed_finish,shape in ("pouch","brick","spray"))
+ if shape in ("cup","tub","tray"):
+  finish(m["container"],"SemiGloss_Vinyl_Roughness")
+ finish(m["plastic"],"PET_Bottle_Roughness")
+ finish(metal["foil"],"Foil_Lid_Roughness",True)
+ finish(metal["steel"],"Brushed_Steel_Roughness",True)
+ finish(metal["film"],"PET_Bottle_Roughness")
+ finish(metal["cap"],"SemiGloss_Vinyl_Roughness")
+ prior=set(S.objects)
+
  fn={"carton":carton,"bottle":bottle,"cup":lambda p,m,metal:cup(p,m,metal,False),
      "tub":lambda p,m,metal:cup(p,m,metal,True),
      "wedge":wedge,"tray":tray,"pouch":pouch,"round":round_cheese,
