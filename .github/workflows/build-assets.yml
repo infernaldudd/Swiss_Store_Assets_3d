@@ -20,18 +20,34 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y blender fonts-lato python3-numpy
-      - name: Build four GLB assets and previews
+      - name: Rebuild original four storefront sign models and transparent double-A proof
         run: |
-          blender -b -t 2 --python tools/build_store_signs.py
-          test "$(find assets -maxdepth 1 -type f -name '*.glb' | wc -l)" -eq 4
-          ls -lh assets/
+          RENDER_PREVIEWS=1 PREVIEW_TARGET=AMIGOS_DoubleA_Projected blender -b -t 2 --python tools/build_store_signs.py
+          for f in LOOP_Wordmark LOOP_Restaurant AMIGOS_Wordmark AMIGOS_DoubleA_Projected; do
+            test -s "assets/${f}.glb"
+          done
+          test -s previews/AMIGOS_DoubleA_Projected.png
+          /usr/bin/python3 - <<'PY'
+          import json,struct
+          path="assets/AMIGOS_DoubleA_Projected.glb"
+          with open(path,"rb") as f:
+              magic,version,total=struct.unpack("<4sII",f.read(12))
+              n,typ=struct.unpack("<I4s",f.read(8))
+              data=json.loads(f.read(n))
+          assert magic==b"glTF" and version==2 and typ==b"JSON"
+          names=[n.get("name","") for n in data["nodes"]]
+          assert len([s for s in names if "projecting A " in s])==2,names
+          assert not any("rear housing" in s.lower() or "identity plaque" in s.lower() for s in names)
+          assert any("main vertical rear mounting rail" in s for s in names)
+          print("SUCCESS: two standalone A channel letters without backing boards or caption")
+          PY
       - name: Commit the generated game assets to main
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A assets/
-          if find previews/ -name '*.png' -print -quit | grep -q .; then git add -A previews/; fi
+          git add assets/LOOP_Wordmark.glb assets/LOOP_Restaurant.glb assets/AMIGOS_Wordmark.glb assets/AMIGOS_DoubleA_Projected.glb previews/AMIGOS_DoubleA_Projected.png
           if ! git diff --cached --quiet; then
-            git commit -m "Build four game-ready 3D Swiss storefront signs"
-            git push
+            git commit -m "Fix freestanding AMIGOS double-A sign and transparent QA preview"
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
