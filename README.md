@@ -131,35 +131,35 @@ RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_canned_food.py
 All files use real-world metres with Blender +Z up. GLB materials have named channels to permit post-import Unreal 5.7 material quality tuning.
 
 
-## 100 distinctive Swiss dairy products — five importable GLB batches
+## Swiss dairy: 100 different products, each GLB is a 5–20-unit retail batch
 
-The dairy catalogue covers **100 genuinely different fictional in-game products**, not repeated instances of one milk container. Each of five batch files contains 20 individual SKU root nodes with their own label texture, brand, package class and product metadata, and separate physically shaped submeshes. The first pass deliberately uses five grouped files to reduce asset-browser clutter in Unreal while retaining independently selectable products.
+**Correct interpretation:** There are **100 genuinely different dairy products** (distinct names, flavors, cheeses, packages and labels). **Each product has its own single GLB**, but **that model physically contains 5–20 identical retail packages of that one product**, arranged like shelf stock. For example, `loop_vollmilch_3_5.glb` contains 12 cartons of that exact milk; an Emmentaler GLB contains 8 wrapped packs of that exact Emmentaler. No mixed products inside a GLB and no lone individual cartons. Each package inside its batch has its own named `STOCK_UNIT_###` node, using shared meshes and materials where possible.
 
-| Batch | Types (20 different SKUs each) | File |
+The 100 GLBs are organized into five subfolders under `assets/dairy_100/`, each with 20 **different product GLBs**:
+
+| Subfolder | 20 distinct products | Typical retail group |
 | --- | --- | --- |
-| 01 | Milk, flavoured milk and cream in cartons/bottles | \`Batch_01_Milk_Cream_Drinks_20_Distinct_Products.glb\` |
-| 02 | Yoghurt pots, Skyr, Greek yoghurt and yoghurt drinks | \`Batch_02_Yoghurt_Drinks_20_Distinct_Products.glb\` |
-| 03 | Hard cheese, soft cheese, mozzarella, feta and grated cheese | \`Batch_03_Cheese_20_Distinct_Products.glb\` |
-| 04 | Butter, margarine, cream, mascarpone and spreads | \`Batch_04_Butter_Rahm_20_Distinct_Products.glb\` |
-| 05 | Quark, milk rice, mousse, pudding and desserts | \`Batch_05_Quark_Desserts_20_Distinct_Products.glb\` |
+| `Batch_01_Milk_Cream_Drinks/` | Fresh/UHT milk, goat milk, chocolate milk, cream | 9 bottles / 12 cartons |
+| `Batch_02_Yoghurt_Drinks/` | Yoghurt flavours, Skyr, Greek yoghurt, yoghurt drink | 16 cups / 9 bottles |
+| `Batch_03_Cheese/` | Swiss hard cheeses, raclette, Brie, mozzarella, grated cheese | 8 wedges / 10 trays / 12 pouches |
+| `Batch_04_Butter_Rahm/` | Butter varieties, spread, mascarpone and other cream | 12 butter blocks / 12 tubs / 6 cream sprays |
+| `Batch_05_Quark_Desserts/` | Quark flavours, pudding, mousse, rice pudding, desserts | 12 tubs / 16 cups |
 
-All five GLBs are under \`assets/dairy_100/\`. **Import as a glTF scene preserving nodes**, not as one automatically merged static mesh. Each of the 20 product root nodes per batch has a unique SKU ID and child meshes: select the root to move or rotate an individual dairy item in your level. Blender generator places the 20 individual items in a 5 × 4 preview grid; these are distinct products and must be arranged on shelves after import.
+Only the five folders are organizational batches. **A GLB is a complete physical stock batch of one particular product**, with 5–20 copies, not 20 different products merged into one GLB.
 
-### Source, art and rebuild
+- `catalog/dairy_100.json`: all 100 distinct product names, packaging kinds, unique SKU IDs, and exact `stock_units_per_glb`.
+- `textures/dairy_100/`: 100 different original fictional brand artworks (1024 × 768 JPG, embedded in the exported GLBs).
+- `previews/dairy_100/`: five contact sheets showing **different product label designs**, not the stock batch geometry.
+- `tools/generate_dairy_artwork.py`: generate SKU artworks and contact sheets.
+- `tools/build_dairy_100.py`: build the real products and duplicate each into its own shelf-stock batch with separately named instance nodes and physical packaging details.
 
-- \`catalog/dairy_100.json\`: 100 product names, unique SKU IDs, packaging shapes and content volumes/weights.
-- \`textures/dairy_100/\`: 100 different authored printed wrap/label JPG textures (1024 × 768), individually packaged with each 3D SKU in the GLBs.
-- \`previews/dairy_100/\`: five gallery contact sheets showing the full 20-product assortment for each batch.
-- \`tools/generate_dairy_artwork.py\`: regenerates original fictional branding/textures and gallery sheets.
-- \`tools/build_dairy_100.py\`: reconstructs the complete 100-product geometry collection with detailed package shapes, lids, lip rims, closures, folded carton tops, and separate label geometry.
-
-\`\`\`bash
+```bash
 /usr/bin/python3 tools/generate_dairy_artwork.py
 blender -b -t 2 --python tools/build_dairy_100.py
-\`\`\`
+```
 
-The shopping-category inspiration came from Coop and Migros dairy sections; not every fictional SKU corresponds to an actual retailer listing. Third-party logos and packaging are not used. This is a first production-ready environmental-prop pass, not an independently visually inspected scan-quality guarantee.
+Import each GLB independently into Unreal 5.7. Preserve the glTF node hierarchy if you want each matching package selectable. For single-item placement, the source script can also produce isolated prototype geometry; the final deliverable is the entire shelf-stock batch.
 
-### Dairy export correction (2026-10-28)
+All store brands, decorative artworks and product entries are fictional. The product categories are inspired by typical Swiss supermarkets, not a verified list of actual Coop or Migros SKUs. These are stylized environmental props with physically distinct packaging shapes; a scan-level realism claim requires further visual QA.
 
-**Canonical delivery is 100 individual GLBs, not five grouped GLBs.** Each of the five `assets/dairy_100/Batch_XX_.../` folders contains **20 different product GLBs**, with its own product name and geometry/texture. One item per import. The five old grouped `Batch_XX_..._20_Distinct_Products.glb` files at the root of `assets/dairy_100/` are legacy and should be ignored; they are not the requested format. The `tools/build_dairy_100.py` generator now produces the separate exports.
+**Superseded files:** Five previous mixed-product GLBs named `Batch_*_20_Distinct_Products.glb` were generated by misunderstanding the grouping request; the build process deletes them. The `Batch_XX_` folders contain the authoritative 100 per-product shelf batches.
