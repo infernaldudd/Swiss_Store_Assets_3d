@@ -103,3 +103,29 @@ RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_noodle_cups.py
 ```
 
 In Unreal Engine 5.7 import the GLBs with the glTF importer. For the hero, adjust the broth / noodle mats separately as needed. Shared foil and paper artwork allows future flavour expansions with the generator.
+
+
+## Canned foods: 18 closed tins + 2 opened hero variants
+
+The Swiss pantry shelf collection includes 18 original fictional foods in a variety of correctly differentiated metal-tin profiles: standard 400–430g tins, squat 160g tuna tins, and a tall 565g pineapple tin. Brands are **LOOP**, **AMIGOS**, **SparFix**, and **ALP PANTRY**. Flavours and pantry categories include ravioli in tomato sauce, pelati and chopped tomatoes, sweetcorn, garden peas, kidney beans, coconut milk, chickpeas, mushrooms, tomato soup, peaches, pineapple rings, baked beans, mixed vegetables, tuna in brine and olive oil, lentil stew, and apricots.
+
+- \`catalog/canned_food.json\`: source catalogue listing all 18 products, content types, approximate dimensions and opening types.
+- \`assets/canned_food/<id>_CLOSED.glb\`: 18 separate cans with pressed steel structural walls, rolled double seams, embossed recessed tops, ring pulls on easy-open models, fine metal normal/roughness, and individual original UV-wrapped 2K matte paper labels.
+- \`assets/canned_food/loop_ravioli_in_tomato_sauce_OPEN_HERO.glb\`: opened ravioli tin with 3D pasta and sauce.
+- \`assets/canned_food/loop_sweetcorn_OPEN_HERO.glb\`: opened corn tin with a separate, batched mesh of individual kernels.
+- \`source/canned_food/\`: Blender source files for both opened hero models.
+- \`textures/canned_food/\`: original illustrated 2048×1024 label artwork and shared steel/paper PBR maps.
+- \`previews/canned_food/\`: four brand assortment label sheets and five optional CPU-renders for geometric/appearance review.
+
+The printed branding and illustration were newly generated for fictional game products. The packaging is not copied from real supermarkets and the contents, labelling, and numerical weights are **game props only**. Do not use as real nutritional information.
+
+### Rebuild
+
+\`\`\`bash
+/usr/bin/python3 tools/generate_canned_food_labels.py
+blender -b -t 2 --python tools/build_canned_food.py
+/usr/bin/python3 tools/make_canned_food_contact_sheets.py
+RENDER_PREVIEWS=1 blender -b -t 2 --python tools/build_canned_food.py
+\`\`\`
+
+All files use real-world metres with Blender +Z up. GLB materials have named channels to permit post-import Unreal 5.7 material quality tuning.
